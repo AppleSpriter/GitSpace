@@ -8,7 +8,7 @@ class Person(models.Model):
     personMobile = models.CharField(max_length=20)
     personEmail = models.EmailField(max_length=50)
     isActive = models.BooleanField(default=True)
-    enrollDate = models.DateField(auto_now_add=True)
+    enrollDate = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.personName
 
@@ -26,10 +26,10 @@ class Dynamic(models.Model):
     dynamicID = models.AutoField(primary_key=True)
     sender = models.ForeignKey(Person)
     content = models.TextField()
-    createData = models.DateField(auto_now_add=True)
+    createDate = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.dynamicID
+        return self.sender.personName
 
     class Meta:
         verbose_name_plural='动态列表'
@@ -37,10 +37,10 @@ class Dynamic(models.Model):
 class Article(models.Model):
     articleID = models.AutoField(primary_key=True)
     sender = models.ForeignKey(Person)
-    createData = models.DateField(auto_now_add=True)
+    createDate = models.DateTimeField(auto_now_add=True)
     contentURL = models.URLField()
     articleTitle = models.CharField(max_length=30)
-    label = models.BinaryField(max_length=64)
+    label = models.BigIntegerField()
     
     def __str__(self):
         return self.articleTitle
@@ -53,11 +53,11 @@ class Idea(models.Model):
     ideaID = models.AutoField(primary_key=True)
     sender = models.ForeignKey(Person)
     content = models.TextField()
-    createData = models.DateField()
-    label = models.BinaryField(max_length=64) 
+    createDate = models.DateTimeField()
+    label = models.BigIntegerField() 
 
     def __str__(self):
-        return self.ideaID
+        return self.sender.personName
 
     class Meta:
         verbose_name_plural='想法列表'
@@ -67,7 +67,7 @@ class ArticleComment(models.Model):
     commentContent = models.CharField(max_length=466)
     commentUser = models.ForeignKey(Person)
     commentArticle = models.ForeignKey(Article)
-    commentTime = models.DateField()
+    commentTime = models.DateTimeField()
 
     def __str__(self):
         return self.articleCommentID;
@@ -80,7 +80,7 @@ class DynamicComment(models.Model):
     commentContent = models.CharField(max_length=466)
     commentUser = models.ForeignKey(Person)
     commentDynamic = models.ForeignKey(Article)
-    commentTime = models.DateField()
+    commentTime = models.DateTimeField()
 
     def __str__(self):
         return self.articleCommentID
