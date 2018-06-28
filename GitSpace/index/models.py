@@ -89,33 +89,6 @@ class DynamicComment(models.Model):
     class Meta:
         verbose_name_plural='动态评论表'
 
-class ArticleThumbUp(models.Model) :
-    likeUser=models.ForeignKey(Person)
-    likeArticle=models.ForeignKey(Article)
-
-class DynamicThumbUp(models.Model) :
-    likeUser=models.ForeignKey(Person)
-    likeDynamic=models.ForeignKey(Dynamic)
-
-class IdeaThumbUp(models.Model) :
-    likeUser=models.ForeignKey(Person)
-    likeIdea=models.ForeignKey(Idea)
-
-class ArticleRecommend(models.Model) :
-    recommendtUser=models.ForeignKey(Person)
-    recommendArticle=models.ForeignKey(Article)
-
-class IdeaRecommend(models.Model) :
-    recommendrecommendUser=models.ForeignKey(Person)
-    recommendIdea=models.ForeignKey(Idea)
-
-class IdeaCollection(models.Model) :
-    collectionUser=models.ForeignKey(Person)
-    collectionIdea=models.ForeignKey(Idea)
-
-class ArticleCollection(models.Model) :
-    collectionUser=models.ForeignKey(Person)
-    collectionArticle=models.ForeignKey(Article)
 # class Push(models.Model):
 #     pushID = models.AutoField(primary_key=True)
 #     userID = models.ForeignKey(Person)
