@@ -1,0 +1,65 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>wangEditor demo</title>
+    <style type="text/css">
+        .toolbar {
+            border: 1px solid #ccc;
+        }
+        .text {
+            border: 1px solid #ccc;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+
+    
+<form action="/wangeditor" method="POST">
+{%csrf_token%}
+    <!-- Title:<input type="text" name="title1"> -->
+    <input type="hidden" name="title2" id= 'title2'>
+
+    <div id="div1" class="text">
+        <p id="p1" >欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+    </div>
+
+    <button id="btn1">获取html</button>
+    <button id="btn2">获取text</button>
+    <input type="submit" name="button" id='button1' value="TEST">
+</form>
+
+
+    <script type="text/javascript" src="{%static 'index/templates/wangEditor.min.js' %}"></script>
+    <script type="text/javascript">
+
+        var E = window.wangEditor
+
+        var editor1 = new E('#div1')  // 两个参数也可以传入 elem 对象，class 选择器
+        editor1.customConfig.uploadImgShowBase64 = true
+
+        editor1.create()
+
+        document.getElementById('btn1').addEventListener('click', function () {
+            // 读取 html
+            alert(editor1.txt.html())
+
+        }, false)
+
+        document.getElementById('btn2').addEventListener('click', function () {
+            // 读取 text
+            alert(editor1.txt.text())
+        }, false)
+
+        document.getElementById('button1').addEventListener('click', function () {
+            // 读取 text
+            title2.value =  editor1.txt.html()
+        }, false)
+
+    </script>
+
+</body>
+</html>
+

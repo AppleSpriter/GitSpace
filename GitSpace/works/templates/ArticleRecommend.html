@@ -1,0 +1,27 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文章推荐</title>
+    <style>
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <!-- <th>recommendtUser</th>
+            <th>recommendArticle</th> -->
+            <th>推荐者</th>
+            <th>推荐文章</th>
+        </tr>
+        {%for a in articleRecommendlist%}
+
+        <tr>
+            <td>{{a.recommendtUser.personName}}</td>
+            <td>{{a.recommendArticle.articleTitle}}</td>
+        </tr>
+
+        {%endfor%}
+    </table>
+</body>
+</html>

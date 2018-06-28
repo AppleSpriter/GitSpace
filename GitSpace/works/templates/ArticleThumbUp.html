@@ -1,0 +1,35 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文章点赞</title>
+    <style>
+        table,table tr th, table tr td { border:1px solid #00ccff; }
+        table { 
+            width: 200px; 
+            min-height: 25px; 
+            line-height: 25px; 
+            text-align: center; 
+            border-collapse: collapse;
+        }   
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <!-- <th>likeUser</th>
+            <th>likeArticle</th> -->
+            <th>点赞者</th>
+            <th>点赞文章</th>
+        </tr>
+        {%for a in articleThumbUplist%}
+
+        <tr>
+            <td>{{a.likeUser.personName}}</td>
+            <td>{{a.likeArticle.articleTitle}}</td>
+        </tr>
+
+        {%endfor%}
+    </table>
+</body>
+</html>

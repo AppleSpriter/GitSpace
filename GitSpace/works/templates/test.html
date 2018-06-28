@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>wangEditor demo</title>
+    <link rel="stylesheet" type="text/css" href="wangEditor.min.css">
+    <style type="text/css">
+        .toolbar {
+            border: 1px solid #ccc;
+        }
+        .text {
+            border: 1px solid #ccc;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+
+    
+
+    <div id="div1">
+        <p id="p1">欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+    </div>
+
+    <button id="btn1">获取html</button>
+    <button id="btn2">获取text</button>
+
+    <!-- 
+    <div id="div1" class="toolbar">
+    </div>
+    <div style="padding: 5px 0; color: #ccc">中间隔离带</div>
+    <div id="div2" class="text"> 
+        <p id="p1">欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+    </div>
+ -->
+    <!-- <div id="div3" class="text"> 
+        <p id="p1">欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+    </div> -->
+
+
+    <script type="text/javascript" src="wangEditor.min.js"></script>
+    <!-- <script type="text/javascript" src='wangEditor.js'></script> -->
+    <script type="text/javascript">
+        var E = window.wangEditor
+
+        var editor1 = new E('#div1')  // 两个参数也可以传入 elem 对象，class 选择器
+        editor1.customConfig.uploadImgShowBase64 = true
+        // editor1.customConfig.uploadImgServer = '/Article' // '/Article'是服务器接口
+        // editor.customConfig.showLinkImg = false
+        editor1.create()
+
+        document.getElementById('btn1').addEventListener('click', function () {
+            // 读取 html
+            alert(editor1.txt.html())
+        }, false)
+
+        document.getElementById('btn2').addEventListener('click', function () {
+            // 读取 text
+            alert(editor1.txt.text())
+        }, false)
+
+        // var editor2 = new E('#div3')
+        
+        // editor2.create()
+        // editor2.$textElem.attr('contenteditable', false)
+    </script>
+
+</body>
+</html>
+

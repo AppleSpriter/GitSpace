@@ -1,0 +1,25 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ArticleThumbUp</title>
+    <style>
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>likeUser</th>
+            <th>likeArticle</th>
+        </tr>
+        {%for a in articleThumbUplist%}
+
+        <tr>
+            <td>{{a.likeUser.personName}}</td>
+            <td>{{a.likeArticle.articleTitle}}</td>
+        </tr>
+
+        {%endfor%}
+    </table>
+</body>
+</html>

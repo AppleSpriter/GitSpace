@@ -1,0 +1,87 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'install', 'wangeditor' ]
+2 info using npm@3.5.2
+3 info using node@v4.2.6
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData wangeditor
+8 silly fetchNamedPackageData wangeditor
+9 silly mapToRegistry name wangeditor
+10 silly mapToRegistry using default registry
+11 silly mapToRegistry registry https://registry.npmjs.org/
+12 silly mapToRegistry uri https://registry.npmjs.org/wangeditor
+13 verbose request uri https://registry.npmjs.org/wangeditor
+14 verbose request no auth needed
+15 info attempt registry request try #1 at 下午2:55:43
+16 verbose request id 64807db12e25d495
+17 http request GET https://registry.npmjs.org/wangeditor
+18 http 200 https://registry.npmjs.org/wangeditor
+19 verbose headers { date: 'Wed, 27 Jun 2018 06:55:45 GMT',
+19 verbose headers   'content-type': 'application/json; charset=UTF-8',
+19 verbose headers   'transfer-encoding': 'chunked',
+19 verbose headers   connection: 'keep-alive',
+19 verbose headers   'set-cookie': [ '__cfduid=d0d42ca316975a3a35defcc37d2211fdd1530082545; expires=Thu, 27-Jun-19 06:55:45 GMT; path=/; domain=.registry.npmjs.org; HttpOnly' ],
+19 verbose headers   'cache-control': 'max-age=300',
+19 verbose headers   'cf-cache-status': 'HIT',
+19 verbose headers   'cf-ray': '43160287db6f986b-LAX',
+19 verbose headers   etag: 'W/"3e029ad4f029fb9c5ad70f90699fbba9"',
+19 verbose headers   'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+19 verbose headers   'last-modified': 'Sun, 27 May 2018 21:30:54 GMT',
+19 verbose headers   vary: 'accept-encoding, accept',
+19 verbose headers   server: 'cloudflare',
+19 verbose headers   'content-encoding': 'gzip' }
+20 silly get cb [ 200,
+20 silly get   { date: 'Wed, 27 Jun 2018 06:55:45 GMT',
+20 silly get     'content-type': 'application/json; charset=UTF-8',
+20 silly get     'transfer-encoding': 'chunked',
+20 silly get     connection: 'keep-alive',
+20 silly get     'set-cookie': [ '__cfduid=d0d42ca316975a3a35defcc37d2211fdd1530082545; expires=Thu, 27-Jun-19 06:55:45 GMT; path=/; domain=.registry.npmjs.org; HttpOnly' ],
+20 silly get     'cache-control': 'max-age=300',
+20 silly get     'cf-cache-status': 'HIT',
+20 silly get     'cf-ray': '43160287db6f986b-LAX',
+20 silly get     etag: 'W/"3e029ad4f029fb9c5ad70f90699fbba9"',
+20 silly get     'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+20 silly get     'last-modified': 'Sun, 27 May 2018 21:30:54 GMT',
+20 silly get     vary: 'accept-encoding, accept',
+20 silly get     server: 'cloudflare',
+20 silly get     'content-encoding': 'gzip' } ]
+21 verbose get saving wangeditor to /home/tarena/.npm/registry.npmjs.org/wangeditor/.cache.json
+22 silly install normalizeTree
+23 silly loadCurrentTree Finishing
+24 silly loadIdealTree Starting
+25 silly install loadIdealTree
+26 silly cloneCurrentTree Starting
+27 silly install cloneCurrentTreeToIdealTree
+28 silly cloneCurrentTree Finishing
+29 silly loadShrinkwrap Starting
+30 silly install loadShrinkwrap
+31 silly loadShrinkwrap Finishing
+32 silly loadAllDepsIntoIdealTree Starting
+33 silly install loadAllDepsIntoIdealTree
+34 silly rollbackFailedOptional Starting
+35 silly rollbackFailedOptional Finishing
+36 silly runTopLevelLifecycles Starting
+37 silly runTopLevelLifecycles Finishing
+38 silly install printInstalled
+39 verbose stack Error: Refusing to install wangeditor as a dependency of itself
+39 verbose stack     at checkSelf (/usr/share/npm/lib/install/validate-args.js:40:14)
+39 verbose stack     at Array.<anonymous> (/usr/share/npm/node_modules/slide/lib/bind-actor.js:15:8)
+39 verbose stack     at LOOP (/usr/share/npm/node_modules/slide/lib/chain.js:15:14)
+39 verbose stack     at chain (/usr/share/npm/node_modules/slide/lib/chain.js:20:5)
+39 verbose stack     at /usr/share/npm/lib/install/validate-args.js:15:5
+39 verbose stack     at /usr/share/npm/node_modules/slide/lib/async-map.js:52:35
+39 verbose stack     at Array.forEach (native)
+39 verbose stack     at /usr/share/npm/node_modules/slide/lib/async-map.js:52:11
+39 verbose stack     at Array.forEach (native)
+39 verbose stack     at asyncMap (/usr/share/npm/node_modules/slide/lib/async-map.js:51:8)
+40 verbose cwd /home/tarena/下载/wangEditor-3.1.1/release
+41 error Linux 4.4.0-128-generic
+42 error argv "/usr/bin/nodejs" "/usr/bin/npm" "install" "wangeditor"
+43 error node v4.2.6
+44 error npm  v3.5.2
+45 error code ENOSELF
+46 error Refusing to install wangeditor as a dependency of itself
+47 error If you need help, you may report this error at:
+47 error     <https://github.com/npm/npm/issues>
+48 verbose exit [ 1, true ]
