@@ -19,4 +19,8 @@ from index.views import *
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'login/$', login_views),
+    url(r'^register/$', register_views),
+    url(r'^protocol/$', protocol_views),
+    url(r'^', include('works.urls')),
+    #url(r'^', include('gitpush.urls')),
 ]

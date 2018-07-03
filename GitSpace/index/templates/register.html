@@ -1,56 +1,59 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
 <title>Register Form</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="../static/css/style.css" rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="{%static 'css/indexRegister.css'%}">
 </head>
 <body>
-<script src="../static/js/valid.js"></script>
+<script src="{%static 'js/valid.js'%}"></script>
 <div id="Layer1" style="position:absolute; left:0px; top:0px; width:100%; height:100%">  
-<img src="../static/images/register_bg.jpg" width="100%" height="100%"/>  
+<img src="{%static 'imgs/loginAndRegister.jpg'%}" width="100%" height="100%"/>  
 </div>  
-	<div class="main">
-		<div class="login">
-			<h1>GitSpace</h1>
-			<div class="inset">
-				<!--start-main-->
-				<form method="post">
-				{%csrf_token%}
-			         <div>
-			         	<h2>GitSpace—全新的IT社交</h2>
-						<span><label>用户名</label></span>
-						<span><input type="text" class="textbox" name="uname"></span>
-					 </div>
-					 <div>
-						<span><label>密码</label></span>
-					    <span><input type="password" class="password" name="upwd" id="js_pw1"></span>
-					 </div>
-					 <div>
-						<span><label>确认密码</label></span>
-					    <span><input type="password" class="password" name="upwd2" id="js_pw2"  /></span>
-					 </div>
+    <div class="main">
+        <div class="login">
+            <h1>GitSpace</h1>
+            <div class="inset">
+                <!--start-main-->
+                <form method="post">
+						{%csrf_token%}
                      <div>
-						<span><label>手机</label></span>
-						<span><input type="text" class="textbox" name="umob"></span>
-					 </div>
-					 <div>
-						<span><label>电子邮箱</label></span>
-						<span><input type="text" class="textbox" id="js_email" name="umail"></span>
-					 </div>
-					 <div>
-					 <font size=2 color="blue">注册即代表同意<a href="protocol.html"><注册协议></a></font>
-					 </div>
-					 <br>
-					<div class="sign">
-                        <input type="submit" value="注册" class="submit" id="submit" onclick="validate()" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="登录" class="submit" />
-					</div>
-					</form>
-				</div>
-			</div>
-		</div>
-		<!--//end-main-->
-		</div>
+                        <h2>GitSpace—全新的IT社交</h2>
+                        <span><label>用户名：</label></span>
+                        <span><input type="text" class="textbox" name="uname"></span>
+                     </div>
+                     <div>
+                        <span><label>密码：</label></span>
+                        <span><input type="password" class="password" name="upwd" id="js_pw1"></span>
+                     </div>
+                     <div>
+                        <span><label>确认密码：</label></span>
+                        <span><input type="password" class="password" name="upwd2" id="js_pw2"  /></span>
+                     </div>
+                     <div>
+                        <span><label>手机：</label></span>
+                        <span><input type="text" class="textbox" name="umob"></span>
+                     </div>
+                     <div>
+                        <span><label>电子邮箱：</label></span>
+                        <span><input type="text" class="textbox" id="js_email" name="umail"></span>
+                     </div>
+                     <div>
+							 <font size=2 color="grey">注册即代表同意<a href="{{'/protocol'}}">&nbsp;&nbsp;<注册协议></a></font>
+                     </div>
+                     <br>
+                    <div class="sign">
+                        <input type="submit" value="注册" class="submit" id="submit" onclick="validate()" />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="{{'/login'}}"><input type="" value="登录" class="submit" /></a>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--//end-main-->
+        </div>
 </body>
 </html>
