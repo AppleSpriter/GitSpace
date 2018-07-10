@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>articleEdit</title>
+    <style type="text/css">
+    #container {
+        width: 800px;
+        margin: 0 auto;
+    }
+
+    #toolbar-container {
+        border: 1px solid #ccc;
+        background-color: #fff;
+    }
+
+    #toolbar-container:after {
+        display: table;
+        content: '';
+        clear: both;
+    }
+
+    #editor-toolbar {
+        float: left;
+    }
+
+    #btn-container {
+        float: right;
+        text-align: right;
+    }
+
+    #editor-text {
+        border: 1px solid #ccc;
+        border-top: 0;
+        height: 300px;
+        background-color: #fff;
+    }
+
+    #cover {
+        display: none;
+        position: fixed;
+        z-index: 100;
+        top: 50px;
+        left: 50px;
+        right: 50px;
+        height: 500px;
+        padding: 20px;
+        background-color: #f1f1f1;
+    }
+    </style>
+    <script type="text/javascript">
+    function formSubmit() {
+        document.getElementById("articleBody").submit()
+    }
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="referrer" content="always" />
+    <script charset="utf-8" src="../static/editor/b.js"></script>
+    <script src="../static/editor/hm.js"></script>
+    <script type="../static/editor/tingyun-rum-559c80716d.js"></script>
+    <title>写文章-CitSpace</title>
+    <script type="../static/editor/jquery.js"></script>
+    <script type="../static/editor/jquery-version.js"></script>
+    <link href="../static/editor/commons.8a46004.css" rel="stylesheet" />
+    <script type="../static/editor/commons.bundle.8a46004b505e21d4bed0.js"></script>
+    <link href="../images/favicon.ico" rel="SHORTCUT ICON" />
+    <script type="text/javascript">
+    var blog_address = "https://www.jileren.top/";
+    </script>
+    <link id="xheCSS_fashion" rel="stylesheet" type="text/css" href="../static/editor/ui.css" />
+</head>
+
+<body class="">
+    <header class="bg-white" style="background-image: url(../static/imgs/banner3.jpg);">
+        <nav class="navbar navbar-expand-md navbar-light container">
+            <a class="header-logo" href="www.jileren.top" title="GitSpace首页">
+                <svg class="icon-logo">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#logo"></use>
+                </svg>
+            </a>
+            <div class="collapse navbar-collapse" style="margin-left: 100px; margin-top: 60px;">
+                <a class="nav-link header-mod-txt">
+                    <p style="color:white;font-size:18px;">创作中心</p>
+                </a>
+            </div>
+        </nav>
+    </header>
+    <script type="text/javascript" src="../static/editor/jquery.js"></script>
+    <link href="../static/editor/editor.8a46004.css" type="text/css" rel="Stylesheet" />
+    <script type="text/javascript" src="../static/editor/csdn.js"></script>
+    <script src="../static/editor/csdn_label.js"></script>
+    <main role="main" class="contain">
+        <form action="post-article" method="POST" id="articleBody">
+            <div class="row row-offcanvas row-offcanvas-right main-wrapper">
+                <div class="col-6 col-md-2 sidebar-offcanvas" id="sidebar">
+                    <div class="list-group-item list-group-title">
+                        内容
+                    </div>
+                    <div class="list-group">
+                        <a href="www.jileren.top" class="list-group-item active" data-title="article">文章管理</a>
+                        <a href="www.jileren.top" target="_blank" class="list-group-item none">想法管理</a>
+                        <a href="www.jileren.top" class="list-group-item none" data-title="comment">动态管理</a>
+                    </div>
+                </div>
+                <div class="col-12 col-md-10" id="content-body">
+                    <div class="title-box">
+                        <input type="text" id="txtTitle" maxlength="30" placeholder="输入文章标题">
+                    </div>
+                    <div class="col-12 col-md-10">
+                        <input type="text" id='article-des' maxlength="100" placeholder="文章摘要：最多50字">
+                    </div>
+                    <div class="section" style="width: 100%">
+                        <!-- 菜单栏 -->
+                        <div id="toolbar-container">
+                            <div id="editor-toolbar"></div>
+                            <div id="btn-container">
+                                <button id="btn1">文本/视图</button>
+                            </div>
+                        </div>
+                        <!--编辑区域-->
+                        <div>
+                            <div style="padding: 5px 0; color: #ccc"></div>
+                            <div id="editor-text">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="moreDiv">
+                        <div class="pos-box">
+                            <div class="title fullscreen">发布博客<a class="btn-close"><i class="xheIcon icon-guanbi"></i></a></div>
+                            <div class="form-group row form-control-sm d-flex">
+                                <label class="labTitle col-form-label">文章类型：</label>
+                                <div class="txt-box">
+                                    <select id="selType">
+                                        <option value="0">请选择</option>
+                                        <option value="1">原创</option>
+                                        <option value="2">转载</option>
+                                        <option value="4">翻译</option>
+                                    </select>
+                                    <span class="required">*</span>
+                                </div>
+                                <label class="labTitle col-form-label ml-24">文章标签：</label>
+                                <div class="txt-box">
+                                    <select class="droBlogType" id="radChl" name="radChl">
+                                        <option value="0">选择分类</option>
+                                        <option value="28">人工智能</option>
+                                        <option value="1">移动开发</option>
+                                        <option value="29">物联网</option>
+                                        <option value="15">架构</option>
+                                        <option value="2">云计算/大数据</option>
+                                        <option value="17">互联网</option>
+                                        <option value="30">游戏开发</option>
+                                        <option value="12">运维</option>
+                                        <option value="6">数据库</option>
+                                        <option value="14">前端</option>
+                                        <option value="31">后端</option>
+                                        <option value="16">编程语言</option>
+                                        <option value="3">研发管理</option>
+                                        <option value="32">安全</option>
+                                        <option value="33">程序人生</option>
+                                        <option value="34">区块链</option>
+                                        <option value="35">音视频开发</option>
+                                        <option value="36">资讯</option>
+                                        <option value="37">计算机理论与基础</option>
+                                    </select>
+                                    <span class="required">*</span>
+                                </div>
+                            </div>
+                            <div class="form-group row form-control-sm">
+                                <label class="labTitle col-form-label">私密文章：</label>
+                                <div class="switch-box">
+                                    <input type="checkbox" name="public" class="form-control form-control-sm chk-switch" id="chkIsHasNotify">
+                                    <label for="chkIsHasNotify" class="lab-switch"></label>
+                                    <span class="ipt-remark chk-true online-txt">已设置成私密</span>
+                                </div>
+                            </div>
+                            <script type="text/javascript" src="../static/editor/post.js"></script>
+                            <div class="opt-box row unfull">
+                                <label class="labTitle col-form-label"></label>
+                                <div class="txt-box">
+                                    <input id="btnPublish" type="button" onclick="publish()" class="btn btn-outline-danger" value="发布文章" title="发布文章" 　>
+                                    <input id="btnDraft" type="button" onclick="draft()" class="btn btn-outline-danger ml-24 btn-baocun" value="保存为草稿" title="保存为草稿">
+                                    <input id="btnCancel" type="button" class="btn btn-outline-secondary ml-24 btn-shanchu" title="返回列表页" value="返回">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </form>
+        <script type="text/javascript" src="../static/editor/wangEditor.js"></script>
+        <script type="text/javascript">
+        var E = window.wangEditor
+        var editor1 = new E('#editor-toolbar', '#editor-text') // 两个参数也可以传入 elem 对象，class 选择器
+        editor1.customConfig.linkCheck = function(text, link) {
+            console.log(text) // 插入的文字
+            console.log(link) // 插入的链接
+            return true // 返回 true 表示校验成功
+            // return '验证失败' // 返回字符串，即校验失败的提示信息
+        }
+        editor1.customConfig.linkImgCheck = function(src) {
+            console.log(src) // 图片的链接
+            return true // 返回 true 表示校验成功
+            // return '验证失败' // 返回字符串，即校验失败的提示信息
+        }
+        //'upload是服务器上传的接口'
+        editor1.customConfig.uploadImgServer = '/upload-imamg'
+        editor1.customConfig.uploadImgMaxSize = 3 * 1024 * 1024 //限制5Ｍ
+        editor1.customConfig.uploadImgMaxLength = 5 //限制5张
+        //editor1.customConfig.uploadFileName = 'yourFileName'
+        editor1.create()
+        document.getElementById('btn1').addEventListener('click', function() {
+            // 切换文本和视图模式
+        }, false)
+        </script>
+    </main>
+    <div>
+        {% csrf_token %}
+    </div>
+</body>
+
+</html>

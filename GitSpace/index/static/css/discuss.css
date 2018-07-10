@@ -1,0 +1,236 @@
+
+* {
+    box-sizing:border-box;
+}
+body {
+    margin:0;
+    padding:0;
+    font-weight:500;
+    font-family:"Microsoft YaHei","宋体","Segoe UI","Lucida Grande",Helvetica,Arial,sans-serif,FreeSans,Arimo;
+    background-color: rgb(240, 240, 240);
+
+}
+.banner{
+    height: 125px;
+    background-size:contain
+}
+div.search {
+    padding:15px 0;
+    padding-top: 75px;
+    padding-left: 55%;
+
+}
+form {
+    position:relative;
+    width:340px;
+    margin:0 auto;
+}
+input,button {
+    border:none;
+    outline:none;
+}
+
+.bar input {
+    border-radius:5px;
+    background:rgba(255,255,255,0.5);
+    border: solid 1px grey;
+    top:0;
+    right:0;
+    width:100%;
+    height:32px;
+    padding-left:13px;
+    color: white;
+}
+.bar button {
+    background:rgba(29,176,184,1);
+    border-radius:0 5px 5px 0;
+    width:60px;
+    top:0;
+    right:0;
+    height:32px;
+    width:42px;
+    cursor:pointer;
+    position:absolute;
+}
+.bar button:before {
+    content:"搜索";
+    font-size:13px;
+    color:#F9F0DA;
+}
+/*-----------------------------------------------------banner------------------------------*/
+.content{
+    width: 75%;
+    height: 1080px;
+    margin-left: 13%;
+
+}
+.title{
+    width: 90%;
+    height: auto;
+    margin-left: 3%;
+    margin-bottom: 10px;
+}
+.title span{
+    display: inline-block;
+}
+.leftContent{
+    width: 69%;
+    height: 1080px;
+    float: left;
+
+}
+
+.oneMsg{
+    width: 95%;
+    margin-left: 5%;
+    margin-bottom: 20px;
+    overflow:hidden;
+}   
+
+.head{
+    width: 100px;
+    height: 100%;
+    float: left;
+
+}
+.head img{
+    height: 100px;
+    width: 100px;
+}
+
+.msgContainer{
+    width: 85%;
+    height: 100%;
+    margin-left: 10px;
+    float: left;
+    background-color: white;
+
+}
+
+.nameAndTime{
+    width: 100%;
+    height: 15%;
+    border: solid 1px rgba(230,230,230,0.8);
+    padding-left: 20px;
+
+}
+
+.msgContent{
+    width: 100%;
+    height: 80%;
+    padding:10px 0px 5px 20px;
+    border: solid 1px rgba(230,230,230,0.8);
+}
+
+/*.makeComment{
+    background-image: 
+}
+*/
+/*-----------------------------------------------------踢出参与成员-----------------------------------------*/
+.black_overlay{ 
+    display: none; 
+    position: absolute; 
+    top: 0%; 
+    left: 0%; 
+    width: 100%; 
+    height: 300%; 
+    background-color: black; 
+    z-index:1001; 
+    -moz-opacity: 0.8; 
+    opacity:.50; 
+    filter: alpha(opacity=88); 
+} 
+.closeButton{
+    background-color: rgb(50,176,184,0.9);
+    float: right;
+    display: inline-block;
+}
+a{
+    text-decoration:none;
+}
+.deleteIdeaMemberArea { 
+    display: none; 
+    position: fixed; 
+    top: 5%; 
+    left: 25%; 
+    width: 40%; 
+    height: 60%; 
+    padding: 20px; 
+    z-index:1002; 
+    border: 0px solid gray; 
+    background-color: white;
+    overflow: auto; 
+}
+.deleteIdeaMemberContent{
+    width: 100%;
+    height: 300px;
+}
+
+/*-----------------------------------------------------Member------------------------------*/
+
+.rightContent{
+    width: 30%;
+    height: auto;
+    float:right;
+    overflow:hidden;
+    background-color: white;
+
+}
+
+.memberContainer{
+    width: 95%;
+    margin-left: 2%;
+    height: 100%;
+}
+
+.oneMember{
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    overflow:hidden;
+
+}
+.heads{
+    width: auto;
+    width: auto;
+    float: left;
+}
+.heads img{
+    height: 40px;
+    width: 40px;
+}
+
+.profile{
+    width: 85%;
+    height: 100%;
+    float: right;
+}
+
+.name{
+    width: 100%;
+    height: 20%;
+    background-color: rgba(245,245,245,1);
+    border: solid 1px rgba(230,230,230,0.8);
+
+}
+
+.describe{
+    width: 100%;
+    height: 70%;
+    padding: 5px 0px 0px 5px;
+    background-color: rgba(245,245,245,1);
+    border: solid 1px rgba(230,230,230,0.8);
+
+
+}
+
+.memberAdmin{
+    width: 100%;
+    height: 40px;
+    padding-left: 70%;
+}
+
+.memberAdmin button{
+    background-color: rgba(67,186,203,1);
+
+}

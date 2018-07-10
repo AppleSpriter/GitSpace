@@ -1,0 +1,224 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>GitSpace</title>
+    <link rel="stylesheet" href="{%static 'css/index.css'%}">
+    <link rel="stylesheet" href="{%static 'css/button.css'%}">
+    <link rel="stylesheet" href="{%static 'css/font-awesome.min.css'%}">
+    <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+    <link rel="stylesheet" href="{%static 'css/animate.min.css'%}">
+    <script src="{%static 'js/jquery-1.11.3.js'%}"></script>
+    <script src="{%static 'js/index.js'%}"></script>
+    <script src="{%static 'js/comment.js'%}"></script>
+    <script src="{%static 'js/layer/layer.js'%}"></script>
+</head>
+
+<body>
+    <!-- 评论区域 -->
+    <div id="light" class="commentArea">
+        <a href="javascript:void(0)" onclick="commentTanchu2()">
+            <button title="关闭" class="button  button-border button-circle button-small closeButton">X</button>
+        </a>
+        <div id="CommentsContainer" class="CommentsContainer">
+            条评论
+        </div>
+        <div>
+            <div class="TopbarCommentTopbar"></div>
+            <!-- 评论列表commentList　包含头像,评论者,评论内容 -->
+            <div id="commentList" class="commentList">
+                <!--  循环创建每个评论 -->
+            </div>
+            <div id="commentsFooter" class="commentsFooter">
+                <input type="text" id="ucomment" name="ucomment" class="commentcontent">
+            </div>
+        </div>
+    </div>
+    <div id="fade" class="blackoverlay"></div>
+    <!-- 动态区域 -->
+    <div id="dynamic" class="dynamicArea">
+        <a href="javascript:void(0)" onclick="tanchu2()">
+            <button title="关闭" class="button  button-border button-circle button-small closeButton">X</button>
+        </a>
+        <div>
+            <div class="dynamicContent">
+                <form method="post" action="/publishDynamic/" 　>
+                    {% csrf_token %}
+                    <textarea name="dynamicContent" class="dynamicText" autofocus maxlength="233">
+                    </textarea>
+                    <input type="submit" name="" value="发布动态" onclick="alert('发布成功')" class="">
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 想法区域 -->
+    <div id="idea" class="ideaArea">
+        <a href="javascript:void(0)" onclick="tanchu4()">
+            <button title="关闭" class="button  button-border button-circle button-small closeButton">X</button>
+        </a>
+        <div>
+            <div class="ideaContent">
+                <form method="post" action="/publishIdea/" 　>
+                    {% csrf_token %}
+                    <textarea name="ideaContent" class="ideaText" autofocus maxlength="233">
+                    </textarea>
+                    <input type="submit" name="" value="发布想法" onclick="alert('发布成功')" class="">
+                    <select name="label1">
+                        <option value="java">java</option>
+                        <option value="c">c</option>
+                        <option value="c++">c++</option>
+                        <option value="python">python</option>
+                    </select>
+                    <select name="label2">
+                        <option value="大数据">大数据</option>
+                        <option value="人工智能">人工智能</option>
+                        <option value="游戏开发">机器学习</option>
+                        <option value="编程学习">编程学习</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="fade" class="black_overlay"></div>
+    <!-- banner -->
+    <div class="banner" style="background-image: url({%static 'imgs/banner2.jpg'%});">
+        <a href="/indexAfterLogin"><span>首页</span></a>
+        <div class="search bar">
+            <form id="form1" method="post" action="/search/">
+                <input placeholder="Git me！" name="searchContent" type="text">
+                <button type="submit"></button>
+            </form>
+        </div>
+    </div>
+    <div class="content">
+        <!-- 左边部分 -->
+        <div class="leftContent">
+            <div class="navi">
+                <a href="/indexHot" class="button  button-small">热榜</a>
+                <a href="/indexLike" class="button button-small">关注</a>
+                <a href="/indexRecommend" class="button button-small" ">推荐</a>
+            </div>
+            <div class="recommends ">
+<!-- 一个想法 -->
+                {%for s in ideaList%}
+                <div class="recom ">
+                    <div class="label ">
+                    <span id = "idea{{s.ideaID}} ">想法
+                    </span>
+                    <script>    
+                    var dic = {
+                    1:'java',
+                    2:'c',
+                    4:'c++',
+                    8:'python',
+                    16:'大数据',
+                    32:'人工智能',
+                    64:'游戏开发',
+                    128:'编程学习'
+                    };
+                    var str = "想法 ";
+                        for(var tmp = 1;tmp<=128;tmp=tmp*2)
+                        {
+                         if(({{s.label}}&tmp) == tmp)
+                          str+=", "+dic[tmp];
+                        }
+                    document.getElementById("idea{{s.ideaID}} ").innerHTML = str;
+                    </script>
+                    </div>
+                    <div class="ID ">
+                        <div class="head ">
+                            <img src="{%static s.sender.personImage%} " alt=" ">
+                        </div>
+                    <a href="{%url 'othersTrends' s.sender.personID%} "><h2>{{s.sender.personName}}</h2></a>
+                    </div>
+                    <div class="message ">{{s.content}}</div>
+                  
+                      <div class="functions ">
+                        <button title="点赞 " onclick="ideaThumbUp({{s.ideaID}}) " class="button button-plain button-border button-circle button-primary button-small "><i class="fa fa-thumbs-up "></i></button>
+                        <button title="收藏 " onclick="ideaCollection({{s.ideaID}}) " class="button button-plain button-border button-circle button-small "><i class="fa fa-star "></i></button>   
+                       <a href="/discuss/{{s.ideaID}} "><button title="参与想法 " class="button button-plain button-border button-circle button-small "><i class="fa fa-plus "></i></button></a>
+                    </div>
+                </div>
+                {%endfor%}
+
+<!-- 一个动态 -->
+
+                {%for s in dynamicList%}
+                <div class="recom ">
+                    <div class="label "><span>动态</span></div>
+                    <div class="ID ">
+                        <div class="head ">
+                            <img src="{%static s.sender.personImage%} " alt=" ">
+                        </div>
+                    <a href="{%url 'othersTrends' s.sender.personID%} "><h2>{{s.sender.personName}}</h2></a>
+                    </div>
+                    <div class="message ">{{s.content}}</div>
+                  
+                      <div class="functions ">
+                        <button title="点赞 " onclick="dynamicThumup({{s.dynamicID}}) " class="button button-plain button-border button-circle button-primary button-small "><i class="fa fa-thumbs-up "></i></button>
+                        <button title="评论 " onclick="return dynamicCommentTanchu({{s.dynamicID}}) " class="button button-large button-plain button-border button-circle button-small "><i class="fa fa-envelope "></i></button>
+<!--                         <button title="转发 " class="button button-plain button-border button-circle button-small "><i class="fa fa-reply "></i></button>
+                        <button title="收藏 " class="button button-plain button-border button-circle button-small "><i class="fa fa-star "></i></button>   
+                       <a href="./discuss "><button title="参与想法 " class="button button-plain button-border button-circle button-small "><i class="fa fa-plus "></i></button></a> -->
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+        <div class="rightContent ">
+            <div class="loginAndRegister " style="background-image: url({%static 'imgs/leftimg.jpg'%});background-size:100% 100%; " id="person">
+                    <div class="head ">
+                        <section class="box ">
+                            <div class="avatar ">
+                              <a href="/person/personTrends/ " style="background-image: url({%static person.personImage%}); background-size:contain; "><span>{{person.personName}}<br>-详细-</span></a>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="leftFunctions ">
+                        <div class="article "><a href=" "><img src="{%static 'imgs/article.jpg'%} " alt=" " height="40 " width="40 " ></a><span>写文章</span></div>
+                        <div class="thought "><a href="javascript:void(0) " onclick = "tanchu3() "><img src="{%static 'imgs/thought.jpg'%} " alt=" " height="40 " width="50 " ></a><span>写想法</span></div>
+                        <div class="news "><a href = "javascript:void(0) " onclick = "tanchu() "><img src="{%static 'imgs/news.jpg'%} " alt=" " height="40 " width="40 " ></a><span>写动态</span></div>
+                        <div class="collection "><a href="/person/personCollection/ "><img src="{%static 'imgs/collection.jpg'%} " alt=" " height="40 " width="40 " ></a><span>我的收藏</span></div>
+                        <div class="like "><a href="/person/personFollow/ "><img src="{%static 'imgs/like2.jpg'%} " alt=" " height="40 " width="40 " ></a><span>我的关注</span></div>
+                        <div class="logout "><a href="/logOut/" ><img src="{%static 'imgs/logout.jpg'%} " alt=" " height="40 " width="40 " ></a><span>退出登录</span></div>
+                    </div>
+                        
+
+            </div>
+            <div class="loginAndRegister " style="background-image: url({%static 'imgs/welcome.jpg'%}); " id = "nologin">
+                <div class="login ">
+                    <a  href="/login " class="button button-block login-button " style="color:white ">登录</a>
+                    <a href="/register " class="button button-block " >现在注册</a>
+                </div>
+            </div>
+            <script>
+            if ({{person.personID}}) {
+            document.getElementById('person').style.display='block';
+            document.getElementById('nologin').style.display='none';
+            }
+            </script>
+            <div class="ads " style="background-image: url({%static 'imgs/ad.jpg'%}); ">
+            </div>
+            <div class="copyright">
+                <footer class="Footer">
+                <a class="Footer-item" target="_blank" rel="noopener noreferrer" href="//liukanshan.zhihu.com/">Git Me!</a>
+                <span class="Footer-dot"></span><a class="Footer-item" target="_blank" rel="noopener noreferrer" href="/question/19581624">GitSpace指南</a>
+                <span class="Footer-dot"></span><a class="Footer-item" target="_blank" rel="noopener noreferrer" href="/terms">GitSpace协议</a><span class="Footer-dot"></span>
+                <a class="Footer-item" target="_blank" rel="noopener noreferrer" href="/terms/privacy">隐私政策</a><br><a class="Footer-item" target="_blank" href="/app">应用</a><span class="Footer-dot"></span>
+                <a class="Footer-item" target="_blank" rel="noopener noreferrer" href="https://app.mokahr.com/apply/zhihu">工作</a><span class="Footer-dot"></span><button type="button" class="Button OrgCreateButton">申请开通GitSpace机构号</button><br><a class="Footer-item" target="_blank" rel="noopener noreferrer" href="https://zhuanlan.zhihu.com/p/28561671">侵权举报</a><span class="Footer-dot"></span><a class="Footer-item" target="_blank" rel="noopener noreferrer" href="http://www.12377.cn">网上有害信息举报专区</a>
+                <br><span class="Footer-item">违法和不良信息举报：010-82716601</span><br>
+                <a class="Footer-item" target="_blank" href="/contact">联系我们</a><span> © 2018 GitSpace</span></footer>
+            </div>
+
+        </div>
+
+    </div>
+    <footer>
+  
+    </footer>
+</body>
+</html>

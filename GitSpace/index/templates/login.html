@@ -18,23 +18,30 @@
             <div class="inset">
                 <!--start-main-->
                 <form method="post">
-                {%csrf_token%}
-                     <div>
+                {% csrf_token %}
+                    <div>
                         <h2>GitSpace—全新的IT社交</h2>
+                        {% if messages %}
+                            <ul>
+                                {%for message in messages %}
+                                    <li>{{message }}</li>
+                                {%endfor%}
+                            </ul>
+                        {% endif %}
                         <span><label>用户名：</label></span>
                         <span><input type="text" class="textbox" name="uname"></span>
-                     </div>
+                    </div>
                      <div>
                         <span><label>密码：</label></span>
                         <span><input type="password" class="password" name="upwd"></span>
                      </div>
                      <div>
-                        <label><input type="checkbox" name="isSaved"><font color="black">&nbsp;记住密码</font></label>
+                        <label><input type="checkbox" name="check"><font color="black">&nbsp;记住密码</font></label>
                     </div>
                     <div class="sign">
-							<input type="submit" value="登录" class="submit" />
+                        <input type="submit" value="登录" class="submit" />
                         &nbsp;&nbsp;&nbsp;
-						<a href="{{'/register'}}"><input type="submit" value="注册" class="submit" /></a>
+                        <a  href="/register/"><input type="" value="注册" class="submit" style="width:20%;" /></a>
                     </div>
                     </form>
                 </div>

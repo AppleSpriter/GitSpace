@@ -15,12 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from index.views import *
+
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'login/$', login_views),
-    url(r'^register/$', register_views),
-    url(r'^protocol/$', protocol_views),
-    url(r'^', include('works.urls')),
-    #url(r'^', include('gitpush.urls')),
+            url(r'^admin/', admin.site.urls),
+            url(r'^',include('index.urls')),
 ]

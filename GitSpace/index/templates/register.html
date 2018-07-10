@@ -18,7 +18,7 @@
             <div class="inset">
                 <!--start-main-->
                 <form method="post">
-						{%csrf_token%}
+                {% csrf_token %}
                      <div>
                         <h2>GitSpace—全新的IT社交</h2>
                         <span><label>用户名：</label></span>
@@ -34,20 +34,27 @@
                      </div>
                      <div>
                         <span><label>手机：</label></span>
-                        <span><input type="text" class="textbox" name="umob"></span>
+                        <span><input type="text" class="textbox" name="umobile"></span>
                      </div>
                      <div>
                         <span><label>电子邮箱：</label></span>
-                        <span><input type="text" class="textbox" id="js_email" name="umail"></span>
+                        <span><input type="text" class="textbox" id="js_email" name="uemail"></span>
                      </div>
                      <div>
-							 <font size=2 color="grey">注册即代表同意<a href="{{'/protocol'}}">&nbsp;&nbsp;<注册协议></a></font>
+                     <font size=2 color="grey">注册即代表同意<a href="/protocol/">&nbsp;&nbsp;<注册协议></a></font>
                      </div>
                      <br>
+                     {% if messages %}
+                            <ul>
+                                {%for message in messages %}
+                                    <li>{{message }}</li>
+                                {%endfor%}
+                            </ul>
+                    {% endif %}
                     <div class="sign">
-                        <input type="submit" value="注册" class="submit" id="submit" onclick="validate()" />
+                        <input type="submit" value="注册" class="submit" id="submit" onclick="return validate()"/>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<a href="{{'/login'}}"><input type="" value="登录" class="submit" /></a>
+                        <a href="/login/"><input type="" value="登录" class="submit" style="width:20%;"/></a>
                     </div>
                     </form>
                 </div>

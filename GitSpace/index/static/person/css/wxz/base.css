@@ -1,0 +1,55 @@
+@charset "gb2312";
+/* CSS Document */
+* { margin: 0; padding: 0 }
+body { font: 12px "ËÎÌå", Arial, Helvetica, sans-serif; color: #756F71 }
+img { border: 0; display: block }
+ul { list-style: none; }
+a:link, a:visited {text-decoration: none; color: #333;}
+.left { float: left; width:70%;}
+.right { float: right; width: 350px; }
+.blank { height: 5px; overflow: hidden; width: 100%; margin: auto; clear: both }
+.wbox{ width:1240px; margin:auto; overflow:hidden;}
+header { width: 1667px; margin: auto; height: 150px; position: relative; overflow: hidden;}
+/*#logo a { width: 260px; height: 60px; margin: 10px 0 0 0; position: absolute; background: url(../images/cha/logo.jpg) no-repeat; display: block }
+*/
+nav { float: right; width: 100%; margin: 20px 0 0 0; text-align: right }
+nav .wbox{ width: 380px; margin: 30px auto; font-family: 'Microsoft YaHei'; font-size: 14px; float: right; position:relative; bottom: 0px;right: 80px;} 
+nav .wbox a { width: 380px; margin: 30px auto; font-family: 'Microsoft YaHei'; font-size: 14px; float: left; } 
+nav .wbox input{ width: 260px; border: 1px solid #e2e2e2; height: 30px; float: left; background-image: url(images/search.jpg); background-repeat: no-repeat; background-size: 25px; background-position:5px center; padding:0 0 0 40px; } 
+nav .search{ width: 78px; 	height: 32px; float: right; background: rgba(47,166,183,1); color: white; text-align: center; line-height: 32px; cursor: pointer; } 
+nav a { position: relative; display: inline-block; font-size: 18px; font-family: "Î¢ÈíÑÅºÚ", Arial, Helvetica, sans-serif; }
+nav a:hover { text-decoration: none }
+
+
+.topnav a { margin: 0 5px; padding: 0 8px; }
+.topnav a span:first-child { z-index: 2; display: block; }
+.topnav a span:last-child { z-index: 1; display: block; color: #999; font: 12px Georgia, serif; opacity: 0; -webkit-transition: -webkit-transform 0.3s, opacity 0.3s; -moz-transition: -moz-transform 0.3s, opacity 0.3s; transition: transform 0.3s, opacity 0.3s; -webkit-transform: translateY(-100%); -moz-transform: translateY(-100%); transform: translateY(-100%); text-align: center }
+.topnav a:hover span:last-child, .topnav a:focus span:last-child { opacity: 1; -webkit-transform: translateY(0%); -moz-transform: translateY(0%); transform: translateY(0%); }
+#topnav_current { color: #e15782; }
+
+
+.en { color: #999; font-size: 12px; z-index: 1; display: block; }/* ie */
+article { width: 1240px; margin: 0px auto; overflow: hidden }
+.background {height: 500px; overflow: hidden;width:1240px; margin: auto;}
+aside { width: 250px; margin: 0;}
+footer { text-align: center; line-height: 40px; border-top: #E8E8E8 1px solid ; width:1000px; margin:auto}
+
+.registerTop {  margin:1px auto;      background: #F8F8FF ;/*增加的注册信息*/
+    
+    color:#575454;  
+    width:500px;
+    height: 400px;
+    margin:20px auto;
+    font-family: "宋体";
+    font-weight: bold; 
+    font-size:16px;
+    position: relative;
+    top: 50px;
+    float: left;
+    right: 140px;
+
+}
+.registerTop tr td input{
+    border:2px solid #e2e2e2;
+
+}

@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <title>个人主页</title>
+    <link rel="stylesheet" href="{%static 'css/index.css'%}">
+    <link rel="stylesheet" href="{%static 'person/css/index.css'%}">
+    <link rel="stylesheet" href="{%static 'person/css/button.css'%}">
+    <link rel="stylesheet" href="{%static 'person/css/font-awesome.min.css'%}">
+    <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{%static 'person/css/style.css'%}">
+    <link rel="stylesheet" href="{%static 'person/css/wxz/index.css'%}">
+    <link rel="stylesheet" href="{%static 'person/css/wxz/base.css'%}">
+    <script type="text/javascript" src="{%static 'person/js/index.js'%}"></script>
+    <script src="{%static 'js/jquery-1.11.3.js'%}"></script>
+    <script src="{%static 'js/comment.js'%}"></script>
+</head>
+
+<body>
+    <div class="banner" style="background-image: url({%static 'imgs/banner2.jpg'%});">
+        <a href="/indexAfterLogin"><span>首页</span></a>
+        <div class="search bar">
+            <form>
+                <input placeholder="Git me！" name="cname" type="text">
+                <button type="submit"></button>
+            </form>
+        </div>
+    </div>
+    <div class="wbanner" style="background-image: url({%static 'person/imgs/cha/banner_top.jpg'%});">
+      　　<section class="wbox">
+        <div class="wavatar" style="background-image: url({%static person.personImage%});">
+          <a href="#">
+            <span>
+              {{person.personName}}
+            </span>
+          </a>
+        </div>
+        <ul class="wtexts">
+          <p>{{person.personInfo}}</p>
+        </ul>  
+        <div class="wtexts">
+                <a href="/person/personTrends">返回个人主页>></a>
+                <div id="photo" style="left: -470px;">{{person.personName}}</div>    
+        </div>
+      </section>
+    </div>
+
+    <div class="background" style="background-image: url({%static 'person/imgs/cha/article.jpg'%});">
+      <form enctype="multipart/form-data" method="post" action="/person/editPerson/">
+      {% csrf_token %} 
+        <table class="registerTop">
+          <tr>
+            <td>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;用户名</span>
+            </td>
+            <td>{{person.personName}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              性别
+            </td>
+            <td>
+              <input type="radio" id="male" name="userSex" value="男" />男
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" id="female" name="userSex" value="女" />女
+            </td>
+            <script type="text/javascript">
+              if('{{person.personSex}}'=='男') {
+                 document.getElementById('male').checked=true;
+                 console.log("111")
+            } else if('{{person.personSex}}'=='女') {
+              document.getElementById('female').checked=true;
+            } else {
+
+            }
+            </script>
+          </tr>
+          
+
+          <tr><td><span>&nbsp;&nbsp;&nbsp;&nbsp;电话</span></td><td><input type="text" name="userMobile" value="{{person.personMobile}}" /></td></tr>
+          <tr><td><span>&nbsp;&nbsp;&nbsp;&nbsp;邮箱</span></td><td><input type="text" name="userEmail" value="{{person.personEmail}}"/></td></tr>
+
+         <tr><td><span>注册时间</span></td><td>{{person.enrollDate}}</td></tr>
+        
+         <tr><td><span>用户头像</span></td><td><input type="file" name="userImage"></td></tr>
+          <tr><td>个人简介</td>
+          <td style="margin: center;">
+          <!-- <input type="text" name="user_phone1" /> -->
+          <textarea rows="2" cols="32" name = 'userInfo'>{{person.personInfo}}</textarea>
+          </td>
+          </tr>
+          <tr><td colspan="3"><input 
+            style=" width: 78px;   height: 32px;  background: rgba(47,166,183,1); color: white; text-align: center; line-height: 32px; cursor: pointer; margin: auto; position: relative;left: 180px;" 
+            type="submit" name="submit" value="保存" /></td></tr>
+        </table>
+      </form>
+    </div>
+
+
+    <footer>
+    </footer>
+
+
+
+</body>
+</html>

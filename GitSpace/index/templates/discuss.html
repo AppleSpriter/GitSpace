@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>想法参与</title>
+    <link rel="stylesheet" href="{%static 'css/discuss.css'%}">
+    <link rel="stylesheet" href="{%static 'css/button.css'%}">
+    <link rel="stylesheet" href="{%static 'css/font-awesome.min.css'%}">
+    <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+    <script src="{%static 'js/jquery-1.11.3.js'%}"></script>
+    <script src="{%static 'js/discuss.js'%}"></script>
+</head>
+
+<body>
+<!-- 踢出参与成员 -->
+    <div id="deleteIdeaMember" class="deleteIdeaMemberArea">
+        <a href = "javascript:void(0)" onclick = "tanchu2()">
+            <button title="关闭" class="button  button-border button-circle button-small closeButton">X</button></a>
+            <div class="dynamicContent">
+                <form method="post" action="/deleteIdeaMember/{{idea.ideaID}}/"　>
+                {% csrf_token %}
+                {%for p in ideaMemberList%}
+                <p><input type="checkbox" name="deleteIdeaMember" value="{{p.personID}}" />{{p.personName}}</p>
+                {%endfor%}
+                <input type="submit" name=""  value="踢出参与成员" onclick="alert('踢出成功')" class="">
+                </form>
+            </div>
+    </div> 
+    <div id="fade" class="black_overlay"></div>
+
+<!-- 横幅 -->
+    <div class="banner" style="background-image: url({%static 'imgs/banner2.jpg'%});">
+            <a href="/indexAfterLogin"><span>首页</span></a>
+
+        <div class="search bar">
+            <form>
+                <input placeholder="Git me！" name="cname" type="text">
+                <button type="submit"></button>
+            </form>
+        </div>
+    </div>
+<!-- 左边部分 -->
+    <div class="content">
+        <div class="title"><span style="font-size:20px;color:grey;">想法题目</span><span style="font-size:25px;">{{idea.content}}</span></div>
+
+        <div class="leftContent">
+
+<!-- 一个消息 -->
+            {%for s in ideaMessageList%}
+            <div class="oneMsg">
+                <div class="head">
+                    <img src="{%static s.sender.personImage%}">
+                </div>      
+                <div class="msgContainer">
+                    <div class="nameAndTime"><span style="font-size:30px">{{s.sender.personName}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>{{s.publishDate}}</span></div>
+                    <div class="msgContent">
+                            {{s.content}}
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+
+<!-- 富文本区域 -->
+            <div class="makeComment">
+                <form method="post" action="/discuss/{{idea.ideaID}}/">
+                 {% csrf_token %}
+                    <textarea cols="30" rows="10" name="message">
+                    </textarea>
+                    <input type="submit" name="" value="发表">
+                </form>
+            </div>
+
+        </div>
+<!-- 右边部分 -->
+    
+        <div class="rightContent">
+            <div style="margin-bottom:20px;"><span style="font-size: 20px; color: grey;">想法参与者</span></div>
+            <div class="memberContainer">
+<!-- 一个想法参与者 -->
+                {%for m in ideaMemberList%}
+                <div class="oneMember">
+                    <div class="heads"><img src="{%static m.personImage%}"></div>
+                    <div class="profile">
+                        <div class="name"><span style="font-size: 20px;">{{m.personName}}</span></div>
+                        <div class="describe"><span>{{m.personInfo}}</span></div>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+<!-- 管理参与者 -->
+            <div class="memberAdmin">
+                <div id = "isCreator">
+                <button title="邀请" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-plus"></i></button>
+                <a href="javascript:void(0)" onclick = "tanchu()"><button title="踢出" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-minus"></i></button></a>
+                <a href="{%url 'dropIdea' idea.ideaID%}"><button title="解散想法" class="button button-large button-plain button-border button-circle button-small">X</button></a>
+                </div>
+            </div>
+            <script type="text/javascript">
+                if({{person.personID}} == {{idea.sender.personID}})
+                    document.getElementById('isCreator').style.display='block';
+                else
+                    document.getElementById('isCreator').style.display='none';
+            </script>
+        </div>
+    </div>
+
+    <footer>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <title>个人主页</title>
+    <link rel="stylesheet" href="{%static 'css/index.css'%}">
+    <link rel="stylesheet" href="{%static 'person/css/index.css'%}">
+    <link rel="stylesheet" href="{%static 'person/css/button.css'%}">
+    <link rel="stylesheet" href="{%static 'person/css/font-awesome.min.css'%}">
+    <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{%static 'person/css/style.css'%}">
+    <link rel="stylesheet" href="{%static 'person/css/wxz/index.css'%}">
+    <link rel="stylesheet" href="{%static 'person/css/wxz/base.css'%}">
+    <script type="text/javascript" src="{%static 'person/js/index.js'%}"></script>
+    <script src="{%static 'js/jquery-1.11.3.js'%}"></script>
+    <script src="{%static 'js/comment.js'%}"></script>
+</head>
+
+<body>
+    <div class="banner" style="background-image: url({%static 'imgs/banner2.jpg'%});">
+        <a href="/indexAfterLogin"><span>首页</span></a>
+        <div class="search bar">
+            <form>
+                <input placeholder="Git me！" name="cname" type="text">
+                <button type="submit"></button>
+            </form>
+        </div>
+    </div>
+    <div class="wbanner" style="background-image: url({%static 'person/imgs/cha/banner_top.jpg'%});">
+        <section class="wbox">
+            <div class="wavatar" style="background-image: url({%static person.personImage%});background-size:contain;">
+            </div>
+            <ul class="wtexts">
+                <p>{{person.personSex}}</p>
+                <p>{{person.personMobile}}</p>
+                <p>{{person.personEmail}}</p>
+                <p>{{person.personInfo}}</p>
+            </ul>
+            <div class="wtexts">
+                <a href="/person/editPerson">编辑个人主页>></a>
+                <div id="photo" style="left: -470px;">{{person.personName}}</div>
+            </div>
+        </section>
+    </div>
+    <div class="wtemplate">
+        <div class="wbox">
+            <ul>
+                <li><a href="/person/personTrends">&nbsp;&nbsp;<font>动态</font>&nbsp;&nbsp;</a></li>
+                <li><a href="/person/personIdea">&nbsp;&nbsp;<font>想法</font>&nbsp;&nbsp;</a></li>
+                <li><a href="/person/personArticle">&nbsp;&nbsp;<font>文章</font>&nbsp;&nbsp;</a></li>
+                <li><a href="/person/personCollectionIdea">&nbsp;&nbsp;<font>收藏</font>&nbsp;&nbsp;</a></li>
+                <li><a href="/person/personFollow">&nbsp;&nbsp;<font>关注</font>&nbsp;&nbsp;</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- 评论区域 -->
+    <div id="light" class="commentArea">
+        <a href="javascript:void(0)" onclick="commentTanchu2()">
+            <button title="关闭" class="button  button-border button-circle button-small closeButton">X</button>
+        </a>
+        <div id="CommentsContainer" class="CommentsContainer">
+            条评论
+        </div>
+        <div>
+            <div class="TopbarCommentTopbar"></div>
+            <!-- 评论列表commentList　包含头像,评论者,评论内容 -->
+            <div id="commentList" class="commentList">
+                <!--  循环创建每个评论 -->
+            </div>
+            <div id="commentsFooter" class="commentsFooter">
+                <input type="text" id="ucomment" name="ucomment" class="commentcontent">
+            </div>
+        </div>
+    </div>
+    <div id="fade" class="blackoverlay"></div>
+    <!--  -->
+    <article>
+        <div class="bloglist left">
+            {%for i in ideaCollectionList%}
+            <!--横条开始位置-->
+            <div class="recom">
+                <div class="label"><span id="idea{{i.collectionIdea.ideaID}}">想法</span>
+                    <script>
+                    var dic = {
+                        1: 'java',
+                        2: 'c',
+                        4: 'c++',
+                        8: 'python',
+                        16: '大数据',
+                        32: '人工智能',
+                        64: '游戏开发',
+                        128: '编程学习'
+                    };
+                    var str = "想法";
+                    for (var tmp = 1; tmp <= 128; tmp = tmp * 2) {
+                        if (({{ i.collectionIdea.label }} & tmp) == tmp)
+                            str += "," + dic[tmp];
+                    }
+                    document.getElementById("idea{{i.collectionIdea.ideaID}}").innerHTML = str;
+                    </script>
+                    <div class="ID">
+                        <div class="head">
+                            <img src="{%static person.personImage%}" alt="">
+                        </div>
+                        <h2>{{i.sender.personName}}</h2>
+                    </div>
+                    <div class="message">{{i.collectionIdea.content}}
+                    </div>
+                    <div class="message">{{i.collectionIdea.createDate}}
+                    </div>
+                    <div class="functions">
+                        <button title="点赞" class="button button-plain button-border button-circle  button-primary button-small"><i class="fa fa-thumbs-up"></i></button>
+                        <a href="">
+                            <button title="评论" class="button button-large  button-plain button-border button-circle button-small" onmousedown='makeComments()'><i class="fa fa-envelope"></i>
+                            </button>
+                        </a>
+                        <!-- <button title="转发" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-reply"></i></button> -->
+                        <button title="收藏" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-star"></i></button>
+                        <button title="参与想法" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+            <!--这是横条结束位置-->
+        </div>
+        <!--右边条幅栏目结束位置-->
+        <aside class="right">
+            <div class="weather" style="background-image: url({%static 'person/imgs/cha/weather_bg.jpg'%}); background-repeat: no-repeat;">
+                <iframe width="250" scrolling="no" height="60" frameborder="0" allowtransparency="true">
+                </iframe>
+            </div>
+            <div class="news">
+                <h3>
+              <p>最新<span>文章</span></p>
+            </h3>
+                <ul class="rank">
+                    <li><a href="/" title="Column 三栏布局 个人网站模板" target="_blank">Column 三栏布局 个人网站模板</a></li>
+                    <li><a href="/" title="with love for you 个人网站模板" target="_blank">with love for you 个人网站模板</a></li>
+                    <li><a href="/" title="免费收录网站搜索引擎登录口大全" target="_blank">免费收录网站搜索引擎登录口大全</a></li>
+                    <li><a href="/" title="做网站到底需要什么?" target="_blank">做网站到底需要什么?</a></li>
+                    <li><a href="/" title="企业做网站具体流程步骤" target="_blank">企业做网站具体流程步骤</a></li>
+                    <li><a href="/" title="建站流程篇――教你如何快速学会做网站" target="_blank">建站流程篇――教你如何快速学会做网站</a></li>
+                    <li><a href="/" title="box-shadow 阴影右下脚折边效果" target="_blank">box-shadow 阴影右下脚折边效果</a></li>
+                    <li><a href="/" title="打雷时室内、户外应该需要注意什么" target="_blank">打雷时室内、户外应该需要注意什么</a></li>
+                </ul>
+                <h3 class="ph">
+            <p>点击<span>排行</span></p>
+            </h3>
+                <ul class="paih">
+                    <li><a href="/" title="Column 三栏布局 个人网站模板" target="_blank">Column 三栏布局 个人网站模板</a></li>
+                    <li><a href="/" title="withlove for you 个人网站模板" target="_blank">with love for you 个人网站模板</a></li>
+                    <li><a href="/" title="免费收录网站搜索引擎登录口大全" target="_blank">免费收录网站搜索引擎登录口大全</a></li>
+                    <li><a href="/" title="做网站到底需要什么?" target="_blank">做网站到底需要什么?</a></li>
+                    <li><a href="/" title="企业做网站具体流程步骤" target="_blank">企业做网站具体流程步骤</a></li>
+                </ul>
+                <h3 class="links">
+            <p>友情<span>链接</span></p>
+            </h3>
+                <ul class="website">
+                    <li><a href="/">个人博客</a></li>
+                    <li><a href="/">谢泽文个人博客</a></li>
+                    <li><a href="/">3DST技术网</a></li>
+                    <li><a href="/">思衡网络</a></li>
+                </ul>
+            </div>
+        </aside>
+    </article>
+    <footer>
+    </footer>
+    </article>
+</body>
+</html

@@ -1,0 +1,114 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GitSpace</title>
+    <link rel="stylesheet" href="{%static 'css/index.css'%}">
+    <link rel="stylesheet" href="{%static 'css/button.css'%}">
+    <link rel="stylesheet" href="{%static 'css/font-awesome.min.css'%}">
+    <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+    <script type="text/javascript">
+    function searchType(str){
+    if(str == "idea"){
+      document.getElementById('idea').style.display='block';
+      document.getElementById('user').style.display='none';
+      document.getElementById('article').style.display='none';
+    }
+    else if(str == "user")
+    {
+      document.getElementById('idea').style.display='none';
+      document.getElementById('user').style.display='block';
+      document.getElementById('article').style.display='none';
+    }
+    else{
+      document.getElementById('idea').style.display='none';
+      document.getElementById('user').style.display='none';
+      document.getElementById('article').style.display='block';
+    }
+    };
+    </script>
+</head>
+
+<body>
+    <div class="banner" style="background-image: url({%static 'imgs/banner2.jpg'%});">
+            <a href="/indexAfterLogin"><span>首页</span></a>
+
+        <div class="search bar">
+            <form>
+                <input placeholder="Git me！" name="cname" type="text">
+                <button type="submit"></button>
+            </form>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="leftContent">
+        <!-- 导航栏 -->
+            <div class="navi">
+               <button class="button  button-small" onclick = "searchType('idea')">想法</button>
+               <button class="button  button-small" onclick = "searchType('user')">用户</button>
+               <button class="button  button-small" onclick = "searchType('article')">文章</button>
+            </div>
+
+            <div class="recommends" id = "idea">
+            　　　 {%for i in ideaList%}
+                <div class="recom">
+                    <div class="label"><span>想法</span></div>
+                    <div class="ID">
+                        <div class="head">
+                            <img src="{%static i.sender.personImage%}" alt="">
+                        </div>
+                        <h2>{{i.sender.personName}}</h2>
+                    </div>
+                    <div class="message">{{i.content}}
+                    </div>
+                    <div class="functions">
+                        <button title="点赞" class="button button-plain button-border button-circle  button-primary button-small"><i class="fa fa-thumbs-up"></i></button>
+                         <a href=""><button title="评论" class="button button-large  button-plain button-border button-circle button-small"><i class="fa fa-envelope"></i></button></a>                
+                        <button title="收藏" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-reply"></i></button>
+                        <a href="./discuss"><button title="参与想法" class="button button-plain button-border button-circle button-small"><i class="fa fa-plus"></i></button></a>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+            <div class="recommends" id = "user" style="display:none;">
+            　　　　{%for i in personList%}
+                <div class="recom">
+                    <div class="label"><span>用户</span></div>
+                    <div class="ID">
+                        <div class="head">
+                            <img src="{%static i.sender.personImage%}" alt="">
+                        </div>
+                        <h2>{{i.personName}}</h2>
+                    </div>
+                   <div class="message">{{i.personInfo}}
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+            <div class="recommends" id="article" style="display:none;>
+               {%for i in articleList%}
+                <div class="recom">
+                    <div class="label"><span>文章</span></div>
+                    <div class="ID">
+                        <div class="head">
+                            <img src="{%static i.sender.personImage%}" alt="">
+                        </div>
+                        <h2>{{i.sender.personName}}</h2>
+                    </div>
+                    <div class="message">文章
+                    </div>
+                    <div class="functions">
+                        <button title="点赞" class="button button-plain button-border button-circle  button-primary button-small"><i class="fa fa-thumbs-up"></i></button>
+                         <a href=""><button title="评论" class="button button-large  button-plain button-border button-circle button-small"><i class="fa fa-envelope"></i></button></a>                
+                        <button title="收藏" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-reply"></i></button>
+                    </div>
+                </div>
+　　　　　　　　　　　　　　　 {%endfor%}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
