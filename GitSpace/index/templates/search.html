@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>GitSpace</title>
+    <title>搜索　-　GitSpace</title>
     <link rel="stylesheet" href="{%static 'css/index.css'%}">
     <link rel="stylesheet" href="{%static 'css/button.css'%}">
     <link rel="stylesheet" href="{%static 'css/font-awesome.min.css'%}">
@@ -36,8 +36,8 @@
             <a href="/indexAfterLogin"><span>首页</span></a>
 
         <div class="search bar">
-            <form>
-                <input placeholder="Git me！" name="cname" type="text">
+             <form id="form1" method="post" action="/search/">
+                <input placeholder="Git me！" name="searchContent" type="text">
                 <button type="submit"></button>
             </form>
         </div>
@@ -55,7 +55,38 @@
             <div class="recommends" id = "idea">
             　　　 {%for i in ideaList%}
                 <div class="recom">
-                    <div class="label"><span>想法</span></div>
+                    <div class="label"><span id = "idea{{i.ideaID}}">想法</span>
+                         <script>
+                         var dic = {
+                    1:'人工智能',
+                    2:'移动开发',
+                    4:'物联网',
+                    8:'架构',
+                    16:'云计算/大数据',
+                    32:'互联网',
+                    64:'游戏开发',
+                    128:'运维',
+                    256:'数据库',
+                    512:'前端',
+                    1024:'后端',
+                    2048:'编程语言',
+                    4096:'研发管理',
+                    8192:'安全',
+                    16384:'程序人生',
+                    32768:'区块链',
+                    65536:'音视频开发',
+                    131072:'资讯',
+                    262144:'计算机理论与基础',
+                    };
+                       var str = '想法标签';
+                        for(var tmp = 1;tmp<=262144;tmp=tmp*2)
+                        {
+                         if(({{i.label}}&tmp) == tmp)
+                          str+= ", " +dic[tmp];
+                        }
+                    document.getElementById("idea{{i.ideaID}}").innerHTML = str;
+                        </script>
+                    </div>
                     <div class="ID">
                         <div class="head">
                             <img src="{%static i.sender.personImage%}" alt="">
@@ -65,8 +96,7 @@
                     <div class="message">{{i.content}}
                     </div>
                     <div class="functions">
-                        <button title="点赞" class="button button-plain button-border button-circle  button-primary button-small"><i class="fa fa-thumbs-up"></i></button>
-                         <a href=""><button title="评论" class="button button-large  button-plain button-border button-circle button-small"><i class="fa fa-envelope"></i></button></a>                
+                        <button title="点赞" class="button button-plain button-border button-circle  button-primary button-small"><i class="fa fa-thumbs-up"></i></button>            
                         <button title="收藏" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-reply"></i></button>
                         <a href="./discuss"><button title="参与想法" class="button button-plain button-border button-circle button-small"><i class="fa fa-plus"></i></button></a>
                     </div>
@@ -79,7 +109,7 @@
                     <div class="label"><span>用户</span></div>
                     <div class="ID">
                         <div class="head">
-                            <img src="{%static i.sender.personImage%}" alt="">
+                            <img src="{%static i.personImage%}" alt="">
                         </div>
                         <h2>{{i.personName}}</h2>
                     </div>
@@ -88,25 +118,58 @@
                 </div>
                 {%endfor%}
             </div>
-            <div class="recommends" id="article" style="display:none;>
-               {%for i in articleList%}
+            <div class="recommends" id="article" style="display:none;">
+               {%for s in articleList%}
                 <div class="recom">
-                    <div class="label"><span>文章</span></div>
-                    <div class="ID">
-                        <div class="head">
-                            <img src="{%static i.sender.personImage%}" alt="">
+                     <div class="label"><span id = "article{{s.articleID}}">文章</span>
+                     <script>
+                         var dic = {
+                    1:'人工智能',
+                    2:'移动开发',
+                    4:'物联网',
+                    8:'架构',
+                    16:'云计算/大数据',
+                    32:'互联网',
+                    64:'游戏开发',
+                    128:'运维',
+                    256:'数据库',
+                    512:'前端',
+                    1024:'后端',
+                    2048:'编程语言',
+                    4096:'研发管理',
+                    8192:'安全',
+                    16384:'程序人生',
+                    32768:'区块链',
+                    65536:'音视频开发',
+                    131072:'资讯',
+                    262144:'计算机理论与基础',
+                    };
+                       var str = '文章标签';
+                        for(var tmp = 1;tmp<=262144;tmp=tmp*2)
+                        {
+                         if(({{s.label}}&tmp) == tmp)
+                          str+= ", " +dic[tmp];
+                        }
+                    document.getElementById("article{{s.articleID}}").innerHTML = str;
+                        </script>
+                    </div>
+                    <div class="ID ">
+                        <div class="head ">
+                            <img src="{%static s.sender.personImage%} " alt=" ">
                         </div>
-                        <h2>{{i.sender.personName}}</h2>
+                        <a href="{%url 'othersTrends' s.sender.personID%} "><h2>{{s.sender.personName}}</h2></a>
                     </div>
-                    <div class="message">文章
-                    </div>
-                    <div class="functions">
-                        <button title="点赞" class="button button-plain button-border button-circle  button-primary button-small"><i class="fa fa-thumbs-up"></i></button>
-                         <a href=""><button title="评论" class="button button-large  button-plain button-border button-circle button-small"><i class="fa fa-envelope"></i></button></a>                
-                        <button title="收藏" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-reply"></i></button>
+                    <div class="articleTitle"><a href="/article/{{s.articleID}}"><h1>{{s.title}}</h1></a></div>
+                    <div class="message ">{{s.description}}</div>
+                    <div>{{s.createDate}}</div>
+                    <div class="functions ">
+                        <button title="点赞 " onclick="articleThumbUp({{s.articleID}}) " class="button button-plain button-border button-circle button-primary button-small "><i class="fa fa-thumbs-up "></i></button>
+                        <button title="评论 " onclick="return articleCommentTanchu({{s.articleID}}) " class="button button-large button-plain button-border button-circle button-small "><i class="fa fa-envelope "></i></button>
+                        <button title="收藏 " onclick="articleCollection({{s.articleID}})" class="button button-plain button-border button-circle button-small "><i class="fa fa-star "></i></button>
                     </div>
                 </div>
-　　　　　　　　　　　　　　　 {%endfor%}
+                {%endfor%}
+                
             </div>
         </div>
     </div>

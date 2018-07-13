@@ -1,192 +1,281 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>GitSpace</title>
+    <title>热榜　-　GitSpace</title>
     <link rel="stylesheet" href="{%static 'css/index.css'%}">
     <link rel="stylesheet" href="{%static 'css/button.css'%}">
     <link rel="stylesheet" href="{%static 'css/font-awesome.min.css'%}">
     <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{%static 'css/style.css'%}">
     <link rel="stylesheet" href="{%static 'css/animate.min.css'%}">
-    <!-- <link rel="stylesheet" href="{%static 'css/showcase.css'%}"> -->
-
     <script src="{%static 'js/jquery-1.11.3.js'%}"></script>
     <script src="{%static 'js/index.js'%}"></script>
     <script src="{%static 'js/comment.js'%}"></script>
     <script src="{%static 'js/layer/layer.js'%}"></script>
-
+    <!-- select -->
+    <link href="../static/css/css" rel="stylesheet" type="text/css">
+    <link href="../static/css/fSelect.css" rel="stylesheet" type="text/css">
+    <style>
+    body {
+        font-family: 'Open Sans';
+    }
+    .select-container {
+        margin: 10px auto;
+        max-width: 640px;
+    }
+    </style>
 </head>
 
 <body>
-<!-- 评论区域 -->
+    <!-- 评论区域 -->
     <div id="light" class="commentArea">
-            <span>评论</span>
-            <a href = "javascript:void(0)" onclick = "tanchu2()">
-                <button title="关闭" class="button  button-border button-circle button-small closeButton">X</button></a>
-            <div class="Comments-container">
-                总评论数:{{num}}
+        <div id='commentTitle' style="text-align: center;">
+            
+        </div>
+        <a href="javascript:void(0)" onclick="commentTanchu2()">
+            <button title="关闭" class="button  button-border button-circle button-small closeButton">X</button>
+        </a>
+        <div id="CommentsContainer" class="CommentsContainer">
+            条评论
+        </div>
+        <div>
+            <div class="TopbarCommentTopbar"></div>
+            <!-- 评论列表commentList　包含头像,评论者,评论内容 -->
+            <div id="commentList" class="commentList">
+                <!--  循环创建每个评论 -->
             </div>
-                <div>
-                    <div class="Topbar CommentTopbar"></div>
-                    
-                    <!-- 评论列表commentList　包含头像,评论者,评论内容 -->
-                    <div class="commentList">　
-
-                        <!--  循环创建每个评论 -->
-                        {% for a in articleCommentList%}
-                        <div class="commentItem">
-
-                            <!--评论者　，评论内容　，评论时间  -->
-                            <div>{{a.commentUser.personName}} : 
-                            {{a.commentContent}}  
-                            <div style="float:right;">{{ a.commentTime|date:"Y-m-d " }}</div>
-                            <!-- Y-m-d H:i:s 对应年，月，日，小时，分钟，秒 -->
-                            </div>
-                        </div>
-                        {%endfor%}
-                    {{a.commentTime|date:"Y-m-d H:i:s"}}    
+            <div id="commentsFooter" class="commentsFooter">
+                <input type="text" id="ucomment" name="ucomment" class="commentcontent">
+            </div>
+        </div>
+    </div>
+    <div id="fade" class="blackoverlay"></div>
+    <!-- 动态区域 -->
+    <div id="dynamic" class="dynamicArea">
+        <a href="javascript:void(0)" onclick="tanchu2()">
+            <button title="关闭" class="button  button-border button-circle button-small closeButton">X</button>
+        </a>
+        <div>
+            <div class="dynamicContent">
+                <form method="post" action="/publishDynamic/" 　>
+                    {% csrf_token %}
+                    <textarea name="dynamicContent" class="dynamicText" autofocus maxlength="466"></textarea>
+                    <div style="text-align:right; margin-top: 20px;">
+                        <input type="submit" name="" value="发布动态" onclick="alert('发布成功')" class="button button-primary button-pill ">
                     </div>
-
-                    <div class="commentsFooter">
-
-                        <form method="POST" action="/tanchu">
-                        {%csrf_token%} 
-                            <input type="text" name="ucomment">
-                            <input type="submit" name="" value="评论" onclick="alert('fuck')">
-                        </form>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 想法区域 -->
+    <div id="idea" class="ideaArea">
+        <a href="javascript:void(0)" onclick="tanchu4()">
+            <button title="关闭" class="button  button-border button-circle button-small closeButton">X</button>
+        </a>
+        <div>
+            <div class="ideaContent">
+                <form method="post" action="/publishIdea/" 　>
+                    {% csrf_token %}
+                    <textarea name="ideaContent" class="ideaText" autofocus></textarea>
+                    <div class="droBlogType">
+                        <select class="demo" id="Alabels" multiple name="label">
+                            <optgroup label="选择文章标签">
+                                <option value="1">人工智能</option>
+                                <option value="2">移动开发</option>
+                                <option value="3">物联网</option>
+                                <option value="4">架构</option>
+                                <option value="5">云计算/大数据</option>
+                                <option value="6">互联网</option>
+                                <option value="7">游戏开发</option>
+                                <option value="8">运维</option>
+                                <option value="9">数据库</option>
+                                <option value="10">前端</option>
+                                <option value="11">后端</option>
+                                <option value="12">编程语言</option>
+                                <option value="13">研发管理</option>
+                                <option value="14">安全</option>
+                                <option value="15">程序人生</option>
+                                <option value="16">区块链</option>
+                                <option value="17">音视频开发</option>
+                                <option value="18">资讯</option>
+                                <option value="19">计算机理论与基础</option>
+                            </optgroup>
+                        </select>
                     </div>
-                </div>
-    </div> 
-
+                    <div style="text-align:right; margin-top: 20px;">
+                        <input type="submit" name="" value="发布想法" onclick="alert('发布成功')" class="button button-primary button-pill ">
+                    </div>
+                    <script src="../static/js/fSelect.js"></script>
+                    <script>
+                    $(function() {
+                        $('.demo').fSelect();
+                    });
+                    </script>
+                </form>
+            </div>
+        </div>
+    </div>
     <div id="fade" class="black_overlay"></div>
-
-<!-- 横幅 -->
+    <!-- 横幅 -->
     <div class="banner" style="background-image: url({%static 'imgs/banner2.jpg'%});">
         <a href="/indexAfterLogin"><span>首页</span></a>
         <div class="search bar">
-            <form class="searchForm">
-                <input  placeholder="Git me！" name="cname" type="text">
+            <form id="form1" method="post" action="/search/">
+                <input placeholder="Git me！" name="searchContent" type="text">
                 <button type="submit"></button>
             </form>
-        </div>    
+        </div>
     </div>
-<!-- 左边部分 -->
+    <!-- 左边部分 -->
     <div class="content">
         <div class="leftContent">
-        <!-- 导航栏 -->
+            <!-- 导航栏 -->
             <div class="navi">
-            　　　<a href="/indexHot"  class="button  button-small">热榜</a>
-               <a href="/indexLike" class="button button-small">关注</a>
-               <a href="/indexRecommend" class="button button-small"">推荐</a>
+                <a href="/indexHot" class="button  button-small">热榜</a>
+                <a href="/indexLike" class="button button-small">关注</a>
             </div>
-            <div class="recommends">
-<!-- 一个推荐 -->
-                <div class="recom">
-                    <div class="label"><span>想法，贪玩蓝月，传奇，麻痹戒指</span></div>
-                    <div class="ID">
-                        <div class="head">
-                            <img src="{%static 'imgs/head.png'%}" alt="">
+            <div class="recommends ">
+<!-- 想法推荐 -->
+                {%for s in ideaList%}
+                <div class="recom ">
+                    <div class="label ">
+                    <span id = "idea{{s.ideaID}} ">想法
+                    </span>
+                    <script>    
+                     var dic = {
+                    1:'人工智能',
+                    2:'移动开发',
+                    4:'物联网',
+                    8:'架构',
+                    16:'云计算/大数据',
+                    32:'互联网',
+                    64:'游戏开发',
+                    128:'运维',
+                    256:'数据库',
+                    512:'前端',
+                    1024:'后端',
+                    2048:'编程语言',
+                    4096:'研发管理',
+                    8192:'安全',
+                    16384:'程序人生',
+                    32768:'区块链',
+                    65536:'音视频开发',
+                    131072:'资讯',
+                    262144:'计算机理论与基础',
+                    };
+                    var str = "想法 ";
+                        for(var tmp = 1;tmp<=128;tmp=tmp*2)
+                        {
+                         if(({{s.label}}&tmp) == tmp)
+                          str+=", "+dic[tmp];
+                        }
+                    document.getElementById("idea{{s.ideaID}} ").innerHTML = str;
+                    </script>
+                    </div>
+                    <div class="ID ">
+                        <div class="head ">
+                            <img src="{%static s.sender.personImage%} " alt=" ">
                         </div>
-                    <a href="{%url 'othersTrends' 2%}"><h2>乌蝇哥</h2></a>
+                    <a href="{%url 'othersTrends' s.sender.personID%} "><h2>{{s.sender.personName}}</h2></a>
                     </div>
-                    <div class="message">传奇游戏大家都喜欢特戒。前3个特戒，很轻松到手了，最难也就是充个VIP2，50块钱吧，也给的起。好了，到了第四个麻痹戒指，什么？只能去抽奖才能获得！这画风怎么突然换了，这还能玩得起吗？探挽懒月，介四里没有挽过的船新版本，挤需体验三番钟，里造会干我一样，爱象节款游戏。
-                    </div>
-                    <div class="functions">
-                        <button title="点赞" class="button button-plain button-border button-circle  button-primary button-small"><i class="fa fa-thumbs-up"></i></button>
-                         <a href = "javascript:void(0)" onclick = "tanchu()"><button title="评论" class="button button-large  button-plain button-border button-circle button-small" ><i class="fa fa-envelope"></i></button></a>
-                        <button title="转发" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-reply"></i></button>
-                        <button title="收藏" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-star"></i></button> 
-                       <a href="./discuss"><button title="参与想法" class="button button-plain button-border button-circle button-small"><i class="fa fa-plus"></i></button></a>
+                    <div class="message ">{{s.content}}</div>
+                    <div>{{s.createDate}}</div>
+                      <div class="functions ">
+                        <button title="点赞 " onclick="ideaThumbUp({{s.ideaID}}) " class="button button-plain button-border button-circle button-primary button-small "><i class="fa fa-thumbs-up "></i></button>
+                        <button title="收藏 " onclick="ideaCollection({{s.ideaID}}) " class="button button-plain button-border button-circle button-small "><i class="fa fa-star "></i></button>   
+                       <a href="/discuss/{{s.ideaID}} "><button title="参与想法 " class="button button-plain button-border button-circle button-small "><i class="fa fa-plus "></i></button></a>
                     </div>
                 </div>
-<!-- 一个推荐 -->
-                <div class="recom">
-                    <div class="label"><span>动态</span></div>
-                    <div class="ID">
-                        <div class="head">
-                            <img src="{%static 'imgs/head2.png'%}" alt="">
-                        </div>
-                        <h2>渣渣辉</h2>
-                    </div>
-                    <div class="message">打BOSS在这里是非常重要的，装备基本都是BOSS出。但是，一个人太难抢到了，整天被打得怀疑人生。一个BOSS，你自己打，至少十分钟以上，打了99%了，突然杀出来一个家伙，几刀把你砍了，这时候你唯一的想法就是“充钱，干翻他！”有土豪兄弟一起就不一样了，几个人一站，别人都绕路走。兄弟打到装备，往行会仓库里一扔，想要的自己拿，多爽！
-                    </div>
-                    <div class="functions">
-                        <button title="点赞" class="button button-plain button-border button-circle  button-primary button-small"><i class="fa fa-thumbs-up"></i></button>
-                        <a href = "javascript:void(0)" onclick = "tanchu()"><button title="评论" class="button button-large  button-plain button-border button-circle button-small" ><i class="fa fa-envelope"></i></button></a>
-                        <button title="转发" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-reply"></i></button>
-                        <button title="收藏" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-star"></i></button>   
-                    </div>
-                </div>
-                <!-- 一个推荐 -->
-                <div class="recom">
-                    <div class="label"><span>文章，贪玩蓝月，传奇</span></div>
-                    <div class="ID">
-                        <div class="head">
-                            <img src="{%static 'imgs/head3.png'%}" alt="">
-                        </div>
-                        <h2>山鸡</h2>
-                    </div>
-                    <div class="message">我提剑走出新手村，前面是广阔的灌木林，里面零星的分布着几只豪猪，一名顶着“清歌曼曼”字眼的女性玩家正用手里的法杖奋力地敲打着豪猪，背对着我，身姿婀娜柔软。我一脸黑线，这法杖不是远程攻击的武器吗？眼睛继续盯着那婀娜柔软的身姿….不对，是身姿后面的豪猪，我一个鉴定投过去，豪猪的属性显示在我的眼前。
+                {%endfor%}
 
-                    看起来很温顺啊！
-                    </div>
-                    <div class="functions">
-                        <button title="点赞" class="button button-plain button-border button-circle  button-primary button-small"><i class="fa fa-thumbs-up"></i></button>
-                         <a href = "javascript:void(0)" onclick = "tanchu()"><button title="评论" class="button button-large  button-plain button-border button-circle button-small" ><i class="fa fa-envelope"></i></button></a>                
-                        <button title="转发" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-reply"></i></button>
-                        <button title="收藏" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-star"></i></button>
-                    </div>
-                 </div>       
-                <!-- 一个推荐 -->
-                <div class="recom">
-                    <div class="label"><span>动态</span></div>
-                    <div class="ID">
-                        <div class="head">
-                            <img src="{%static 'imgs/head4.png'%}" alt="">
+<!-- 文章推荐 -->
+                {%for a in articleList%}
+                <div class="recom ">
+                    <div class="label "><span id="article{{a.articleID}}">文章
+                    <script>    
+                     var dic = {
+                    1:'人工智能',
+                    2:'移动开发',
+                    4:'物联网',
+                    8:'架构',
+                    16:'云计算/大数据',
+                    32:'互联网',
+                    64:'游戏开发',
+                    128:'运维',
+                    256:'数据库',
+                    512:'前端',
+                    1024:'后端',
+                    2048:'编程语言',
+                    4096:'研发管理',
+                    8192:'安全',
+                    16384:'程序人生',
+                    32768:'区块链',
+                    65536:'音视频开发',
+                    131072:'资讯',
+                    262144:'计算机理论与基础',
+                    };
+                    var str = "想法 ";
+                        for(var tmp = 1;tmp<=128;tmp=tmp*2)
+                        {
+                         if(({{a.label}}&tmp) == tmp)
+                          str+=", "+dic[tmp];
+                        }
+                    document.getElementById("article{{a.articleID}}").innerHTML = str;
+                    </script>
+                    </span></div>
+                    <div class="ID ">
+                        <div class="head ">
+                            <img src="{%static a.sender.personImage%} " alt=" ">
                         </div>
-                        <h2>古天洛</h2>
+                        <h2><a href="/article/{{a.articleID}}">{{a.title}}</a></h2>
                     </div>
-                    <div class="message">大噶好，偶系古天洛．一个叫不上名字的年轻女明星打的广告，也是声称可以将装备回收。当时我正出差参加封闭培训，禁酒禁打牌禁娱乐活动，特别无聊，窝宿舍上网时瞟到个广告就点进去注册帐号玩了。结果呢是确实可以回收装备，但远没有广告宣传的那么简单：可以回收的装备有限制，等级高(貌似是200+？记不清了)还得是蓝色品质的(装备品质是白/绿/蓝/紫/金色依次升高)。蓝色品质还好说，锻造用的材料靠免费做任务得到的材料就足够了，但装备等级的限制就要求角色必须升到足够高的等级后去打高级怪。
+                    <div class="message ">{{a.description}}
                     </div>
-                    <div class="functions">
-                        <button title="点赞" class="button button-plain button-border button-circle  button-primary button-small"><i class="fa fa-thumbs-up"></i></button>
-                         <a href = "javascript:void(0)" onclick = "tanchu()"><button title="评论" class="button button-large  button-plain button-border button-circle button-small" ><i class="fa fa-envelope"></i></button></a>                
-                        <button title="转发" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-reply"></i></button>
-                        <button title="收藏" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-star"></i></button>
+                    <div>{{a.createDate}}</div>
+                    <div class="functions ">
+                        <button title="点赞 " onclick="articleThumbUp({{a.articleID}}) " class="button button-plain button-border button-circle button-primary button-small "><i class="fa fa-thumbs-up "></i></button>
+                        <button title="评论 " onclick="return articleCommentTanchu({{a.articleID}}) " class="button button-large button-plain button-border button-circle button-small "><i class="fa fa-envelope "></i></button>
+                        <button title="收藏 " onclick="articleCollection({{a.articleID}}) " class="button button-plain button-border button-circle button-small "><i class="fa fa-star "></i></button>   
                     </div>
-                 </div>       
-
+                 </div> 
+                {%endfor%}
             </div>
         </div>
         <!-- 右边部分 -->
         
-         <div class="rightContent">
-            <div class="loginAndRegister" style="background-image: url({%static 'imgs/leftimg.jpg'%});background-size:100% 100%;" id="person">
-                    <div class="head">
-                        <section class="box">
-                            <div class="avatar">
-                              <a href="/person/indexPerson/" style="background: url({%static person.personImage%}) no-repeat; background-size:contain;"><span>{{person.personName}}<br>-详细-</span></a>
+         <div class="rightContent ">
+            <div class="loginAndRegister " style="background-image: url({%static 'imgs/leftimg.jpg'%});background-size:100% 100%; " id="person">
+                    <div class="head ">
+                        <section class="box ">
+                            <div class="avatar ">
+                              <a href="/person/indexPerson/ " style="background: url({%static person.personImage%}) no-repeat; background-size:contain; "><span>{{person.personName}}<br>-详细-</span></a>
                             </div>
                         </section>
                     </div>
 
-                    <div class="leftFunctions">
-                        <div class="article"><a href=""><img src="{%static 'imgs/article.jpg'%}" alt="" height="40" width="40" ></a><span>写文章</span></div>
-                        <div class="thought"><a href="javascript:void(0)" onclick = "tanchu3()"><img src="{%static 'imgs/thought.jpg'%}" alt="" height="40" width="50" ></a><span>写想法</span></div>
-                        <div class="news"><a href = "javascript:void(0)" onclick = "tanchu()"><img src="{%static 'imgs/news.jpg'%}" alt="" height="40" width="40" ></a><span>写动态</span></div>
-                        <div class="collection"><a href="/person/personCollection/"><img src="{%static 'imgs/collection.jpg'%}" alt="" height="40" width="40" ></a><span>我的收藏</span></div>
-                        <div class="like"><a href="/person/personFollow/"><img src="{%static 'imgs/like2.jpg'%}" alt="" height="40" width="40" ></a><span>我的关注</span></div>
-                        <div class="logout"><a href="/logOut/" ><img src="{%static 'imgs/logout.jpg'%}" alt="" height="40" width="40" ></a><span>退出登录</span></div>
+                    <div class="leftFunctions ">
+                        <div class="article "><a href="/postnew/"><img src="{%static 'imgs/article.jpg'%} " alt=" " height="40 " width="40 " ></a><span>写文章</span></div>
+
+                        <div class="thought "><a href="javascript:void(0) " onclick = "tanchu3() "><img src="{%static 'imgs/thought.jpg'%} " alt=" " height="40 " width="50 " ></a><span>写想法</span></div>
+
+                        <div class="news "><a href = "javascript:void(0) " onclick = "tanchu() "><img src="{%static 'imgs/news.jpg'%} " alt=" " height="40 " width="40 " ></a><span>写动态</span></div>
+
+                        <div class="collection "><a href="/person/personCollectionIdea/ "><img src="{%static 'imgs/collection.jpg'%} " alt=" " height="40 " width="40 " ></a><span>我的收藏</span></div>
+
+                        <div class="like "><a href="/person/personFollow/ "><img src="{%static 'imgs/like2.jpg'%} " alt=" " height="40 " width="40 " ></a><span>我的关注</span></div>
+
+                        <div class="logout "><a href="/logOut/" ><img src="{%static 'imgs/logout.jpg'%} " alt=" " height="40 " width="40 " ></a><span>退出登录</span></div>
                     </div>
                         
 
             </div>
-            <div class="loginAndRegister" style="background-image: url({%static 'imgs/welcome.jpg'%});" id = "nologin">
-                <div class="login">
-                    <a  href="/login" class="button button-block login-button" style="color:white">登录</a>
-                    <a href="/register" class="button button-block" >现在注册</a>
+            <div class="loginAndRegister " style="background-image: url({%static 'imgs/welcome.jpg'%}); " id = "nologin">
+                <div class="login ">
+                    <a  href="/login " class="button button-block login-button " style="color:white ">登录</a>
+                    <a href="/register " class="button button-block " >现在注册</a>
                 </div>
             </div>
             <script>
@@ -195,17 +284,7 @@
             document.getElementById('nologin').style.display='none';
             }
             </script>
-            <div class="ads" style="background-image: url({%static 'imgs/ad.jpg'%});">
-            </div>
-            <div class="copyright">
-                <footer class="Footer">
-                <a class="Footer-item" target="_blank" rel="noopener noreferrer" href="//liukanshan.zhihu.com/">Git Me!</a>
-                <span class="Footer-dot"></span><a class="Footer-item" target="_blank" rel="noopener noreferrer" href="/question/19581624">GitSpace指南</a>
-                <span class="Footer-dot"></span><a class="Footer-item" target="_blank" rel="noopener noreferrer" href="/terms">GitSpace协议</a><span class="Footer-dot"></span>
-                <a class="Footer-item" target="_blank" rel="noopener noreferrer" href="/terms/privacy">隐私政策</a><br><a class="Footer-item" target="_blank" href="/app">应用</a><span class="Footer-dot"></span>
-                <a class="Footer-item" target="_blank" rel="noopener noreferrer" href="https://app.mokahr.com/apply/zhihu">工作</a><span class="Footer-dot"></span><button type="button" class="Button OrgCreateButton">申请开通GitSpace机构号</button><br><a class="Footer-item" target="_blank" rel="noopener noreferrer" href="https://zhuanlan.zhihu.com/p/28561671">侵权举报</a><span class="Footer-dot"></span><a class="Footer-item" target="_blank" rel="noopener noreferrer" href="http://www.12377.cn">网上有害信息举报专区</a>
-                <br><span class="Footer-item">违法和不良信息举报：010-82716601</span><br>
-                <a class="Footer-item" target="_blank" href="/contact">联系我们</a><span> © 2018 GitSpace</span></footer>
+            <div class="ads " style="background-image: url({%static 'imgs/ad.jpg'%}); ">
             </div>
 
         </div>

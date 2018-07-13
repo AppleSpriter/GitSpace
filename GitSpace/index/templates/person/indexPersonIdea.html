@@ -4,8 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>test</title>
-    <title>个人主页</title>
+    <title>我的想法　-　GitSpace</title>
     <link rel="stylesheet" href="{%static 'css/index.css'%}">
     <link rel="stylesheet" href="{%static 'person/css/index.css'%}">
     <link rel="stylesheet" href="{%static 'person/css/button.css'%}">
@@ -23,8 +22,8 @@
     <div class="banner" style="background-image: url({%static 'imgs/banner2.jpg'%});">
         <a href="/indexAfterLogin"><span>首页</span></a>
         <div class="search bar">
-            <form>
-                <input placeholder="Git me！" name="cname" type="text">
+            <form method="post" action="/search/">
+                <input placeholder="Git me！" name="searchContent" type="text">
                 <button type="submit"></button>
             </form>
         </div>
@@ -41,8 +40,20 @@
             </ul>
             <div class="wtexts">
                 <a href="/person/editPerson">编辑个人主页>></a>
-                <div id="photo" style="left: -470px;">{{person.personName}}</div>
+<!--                     <div id="photo">
+                        <div style="position: relative;width: 200px;text-align: center;"> 
+                        {{person.personName}}
+                        </div> 
+                    </div> -->
+
             </div>
+            <div id="photo">
+                <div style="position: relative;width: 200px;text-align: center;bottom: 15px;"> 
+                <div style="position: relative;bottom: 20px;">
+                    <h1>{{person.personName}}</h1>
+                </div>
+                </div> 
+            </div>                
         </section>
     </div>
     <div class="wtemplate">
@@ -114,13 +125,9 @@
                 </div>
                 <div class="functions">
                     <button title="点赞" onclick="ideaThumbUp({{i.ideaID}})" class="button button-plain button-border button-circle  button-primary button-small"><i class="fa fa-thumbs-up"></i></button>
-                    <a href="">
-                        <button title="评论" class="button button-large  button-plain button-border button-circle button-small" onmousedown='makeComments()'><i class="fa fa-envelope"></i>
-                        </button>
-                    </a>
-                    <!-- <button title="转发" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-reply"></i></button> -->
-                    <button title="收藏" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-star"></i></button>
-                    <button title="参与想法" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-plus"></i></button>
+                    <button title="收藏" onclick="ideaCollection({{i.ideaID}})"" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-star"></i></button>
+                    <a href="/discuss/{{i.ideaID}} "><button title="参与想法" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-plus"></i></button></a>
+                    <button title="删除" onclick="ideaDelete({{i.ideaID}})" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-reply"></i></button>
                 </div>
             </div>
             <!--这是横条结束位置-->
@@ -137,33 +144,28 @@
               <p>最新<span>文章</span></p>
             </h3>
                 <ul class="rank">
-                    <li><a href="/" title="Column 三栏布局 个人网站模板" target="_blank">Column 三栏布局 个人网站模板</a></li>
-                    <li><a href="/" title="with love for you 个人网站模板" target="_blank">with love for you 个人网站模板</a></li>
-                    <li><a href="/" title="免费收录网站搜索引擎登录口大全" target="_blank">免费收录网站搜索引擎登录口大全</a></li>
-                    <li><a href="/" title="做网站到底需要什么?" target="_blank">做网站到底需要什么?</a></li>
-                    <li><a href="/" title="企业做网站具体流程步骤" target="_blank">企业做网站具体流程步骤</a></li>
-                    <li><a href="/" title="建站流程篇――教你如何快速学会做网站" target="_blank">建站流程篇――教你如何快速学会做网站</a></li>
-                    <li><a href="/" title="box-shadow 阴影右下脚折边效果" target="_blank">box-shadow 阴影右下脚折边效果</a></li>
-                    <li><a href="/" title="打雷时室内、户外应该需要注意什么" target="_blank">打雷时室内、户外应该需要注意什么</a></li>
+                    {%for i in articlenew%}                 
+                    <li><a href="/article/{{i.articleID}}" title="{{i.title}}" target="_blank">{{i.title}}</a></li>
+                    {%endfor%}
                 </ul>
                 <h3 class="ph">
             <p>点击<span>排行</span></p>
             </h3>
                 <ul class="paih">
-                    <li><a href="/" title="Column 三栏布局 个人网站模板" target="_blank">Column 三栏布局 个人网站模板</a></li>
-                    <li><a href="/" title="withlove for you 个人网站模板" target="_blank">with love for you 个人网站模板</a></li>
-                    <li><a href="/" title="免费收录网站搜索引擎登录口大全" target="_blank">免费收录网站搜索引擎登录口大全</a></li>
-                    <li><a href="/" title="做网站到底需要什么?" target="_blank">做网站到底需要什么?</a></li>
-                    <li><a href="/" title="企业做网站具体流程步骤" target="_blank">企业做网站具体流程步骤</a></li>
+                     {%for i in hotarticle%}                 
+                    <li><a href="/article/{{i.articleID}}" title="{{i.title}}" target="_blank">{{i.title}}</a></li>
+                    {%endfor%}
+                     {%for i in hotidea%}                 
+                    <li><a href="/discuss/{{i.ideaID}}" title="" target="_blank">{{i.content}}</a></li>
+                    {%endfor%}
                 </ul>
                 <h3 class="links">
             <p>友情<span>链接</span></p>
             </h3>
                 <ul class="website">
-                    <li><a href="/">个人博客</a></li>
-                    <li><a href="/">谢泽文个人博客</a></li>
-                    <li><a href="/">3DST技术网</a></li>
-                    <li><a href="/">思衡网络</a></li>
+                    <li><a href="http://www.nwsuaf.edu.cn">西北农林科技大学</a></li>
+                    <li><a href="https://pt.nwsuaf6.edu.cn">麦田pt</a></li>
+                    <li><a href="https://www.csdn.net/">csdn</a></li>
                 </ul>
             </div>
         </aside>

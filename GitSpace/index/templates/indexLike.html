@@ -3,22 +3,145 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>GitSpace</title>
+    <title>我的关注　-　GitSpace</title>
     <link rel="stylesheet" href="{%static 'css/index.css'%}">
     <link rel="stylesheet" href="{%static 'css/button.css'%}">
     <link rel="stylesheet" href="{%static 'css/font-awesome.min.css'%}">
     <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{%static 'css/style.css'%}">
-    <script src="js/jquery-1.11.3.js"></script>
+    <script src="{%static 'js/jquery-1.11.3.js'%}"></script>
+    <script src="{%static 'js/comment.js'%}"></script>
+    <script type="text/javascript">
+    function searchType(str){
+    if(str == "dynamic"){
+      document.getElementById('dynamicJS').style.display='block';
+      document.getElementById('ideaJS').style.display='none';
+      document.getElementById('articleJS').style.display='none';
+    }
+    else if(str == "idea")
+    {
+      document.getElementById('dynamicJS').style.display='none';
+      document.getElementById('ideaJS').style.display='block';
+      document.getElementById('articleJS').style.display='none';
+    }
+    else{
+      document.getElementById('dynamicJS').style.display='none';
+      document.getElementById('ideaJS').style.display='none';
+      document.getElementById('articleJS').style.display='block';
+    }
+    };
+    </script>
+    <!-- select -->
+    <link href="../static/css/css" rel="stylesheet" type="text/css">
+    <link href="../static/css/fSelect.css" rel="stylesheet" type="text/css">
+    <style>
+    body {
+        font-family: 'Open Sans';
+    }
+    .select-container {
+        margin: 10px auto;
+        max-width: 640px;
+    }
+    </style>
 </head>
 
 <body>
+        <!-- 评论区域 -->
+    <div id="light" class="commentArea">
+        <div id='commentTitle' style="text-align: center;">
+            
+        </div>
+        <a href="javascript:void(0)" onclick="commentTanchu2()">
+            <button title="关闭" class="button  button-border button-circle button-small closeButton">X</button>
+        </a>
+        <div id="CommentsContainer" class="CommentsContainer">
+            条评论
+        </div>
+        <div>
+            <div class="TopbarCommentTopbar"></div>
+            <!-- 评论列表commentList　包含头像,评论者,评论内容 -->
+            <div id="commentList" class="commentList">
+                <!--  循环创建每个评论 -->
+            </div>
+            <div id="commentsFooter" class="commentsFooter">
+                <input type="text" id="ucomment" name="ucomment" class="commentcontent">
+            </div>
+        </div>
+    </div>
+    <div id="fade" class="blackoverlay"></div>
+    <!-- 动态区域 -->
+    <div id="dynamic" class="dynamicArea">
+        <a href="javascript:void(0)" onclick="tanchu2()">
+            <button title="关闭" class="button  button-border button-circle button-small closeButton">X</button>
+        </a>
+        <div>
+            <div class="dynamicContent">
+                <form method="post" action="/publishDynamic/" 　>
+                    {% csrf_token %}
+                    <textarea name="dynamicContent" class="dynamicText" autofocus maxlength="466"></textarea>
+                    <div style="text-align:right; margin-top: 20px;">
+                        <input type="submit" name="" value="发布动态" onclick="alert('发布成功')" class="button button-primary button-pill ">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 想法区域 -->
+    <div id="idea" class="ideaArea">
+        <a href="javascript:void(0)" onclick="tanchu4()">
+            <button title="关闭" class="button  button-border button-circle button-small closeButton">X</button>
+        </a>
+        <div>
+            <div class="ideaContent">
+                <form method="post" action="/publishIdea/" 　>
+                    {% csrf_token %}
+                    <textarea name="ideaContent" class="ideaText" autofocus></textarea>
+                    <div class="droBlogType">
+                        <select class="demo" id="Alabels" multiple name="label">
+                            <optgroup label="选择文章标签">
+                                <option value="1">人工智能</option>
+                                <option value="2">移动开发</option>
+                                <option value="3">物联网</option>
+                                <option value="4">架构</option>
+                                <option value="5">云计算/大数据</option>
+                                <option value="6">互联网</option>
+                                <option value="7">游戏开发</option>
+                                <option value="8">运维</option>
+                                <option value="9">数据库</option>
+                                <option value="10">前端</option>
+                                <option value="11">后端</option>
+                                <option value="12">编程语言</option>
+                                <option value="13">研发管理</option>
+                                <option value="14">安全</option>
+                                <option value="15">程序人生</option>
+                                <option value="16">区块链</option>
+                                <option value="17">音视频开发</option>
+                                <option value="18">资讯</option>
+                                <option value="19">计算机理论与基础</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div style="text-align:right; margin-top: 20px;">
+                        <input type="submit" name="" value="发布想法" onclick="alert('发布成功')" class="button button-primary button-pill ">
+                    </div>
+                    <script src="../static/js/fSelect.js"></script>
+                    <script>
+                    $(function() {
+                        $('.demo').fSelect();
+                    });
+                    </script>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="fade" class="black_overlay"></div>
+    <!-- banner -->
     <div class="banner" style="background-image: url({%static 'imgs/banner2.jpg'%});">
             <a href="/indexAfterLogin"><span>首页</span></a>
 
         <div class="search bar">
-            <form class="searchForm"> 
-                <input placeholder="Git me！" name="cname" type="text">
+             <form id="form1" method="post" action="/search/">
+                <input placeholder="Git me！" name="searchContent" type="text">
                 <button type="submit"></button>
             </form>
         </div>
@@ -29,43 +152,149 @@
             <div class="navi">
               　<a href="/indexHot"  class="button  button-small">热榜</a>
                <a href="/indexLike" class="button button-small">关注</a>
-               <a href="/indexRecommend" class="button button-small"">推荐</a>
             </div>
-            <div class="recommends">
-            
+             <!-- 导航栏 -->
+            <div class="navi">
+               <button class="button  button-small" onclick = "searchType('dynamic')">动态</button>
+               <button class="button  button-small" onclick = "searchType('idea')">想法</button>
+               <button class="button  button-small" onclick = "searchType('article')">文章</button>
+            </div>
+
+            <div class="recommends" id = "dynamicJS" style="display: block;">
+                {%for i in dynamicList%}
                 <div class="recom">
                     <div class="label"><span>动态</span></div>
                     <div class="ID">
                         <div class="head">
-                            <img src="{%static 'imgs/head2.png'%}" alt="">
+                            <img src="{%static i.sender.personImage%}" alt="">
                         </div>
-                        <h2>渣渣辉</h2>
+                        <a href="/person/personTrends/{{i.sender.personID}}"><h2>{{i.sender.personName}}</h2></a>
                     </div>
-                    <div class="message">打BOSS在这里是非常重要的，装备基本都是BOSS出。但是，一个人太难抢到了，整天被打得怀疑人生。一个BOSS，你自己打，至少十分钟以上，打了99%了，突然杀出来一个家伙，几刀把你砍了，这时候你唯一的想法就是“充钱，干翻他！”有土豪兄弟一起就不一样了，几个人一站，别人都绕路走。兄弟打到装备，往行会仓库里一扔，想要的自己拿，多爽！
-
+                    <div class="message">{{i.content}}
+                    </div>
+                    <div class="message">{{i.createDate}}
                     </div>
                     <div class="functions">
-                        <button title="点赞" class="button button-plain button-border button-circle  button-primary button-small"><i class="fa fa-thumbs-up"></i></button>
-                         <a href=""><button title="评论" class="button button-large  button-plain button-border button-circle button-small"><i class="fa fa-envelope"></i></button></a>                
-                        <button title="转发" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-reply"></i></button>
-                        <a href="./discuss"><button title="参与想法" class="button button-plain button-border button-circle button-small"><i class="fa fa-plus"></i></button></a>
+                        <button title="点赞 " onclick="dynamicThumup({{i.dynamicID}}) " class="button button-plain button-border button-circle button-primary button-small "><i class="fa fa-thumbs-up "></i></button>
+                        <button title="评论 " onclick="return dynamicCommentTanchu({{i.dynamicID}}) " class="button button-large button-plain button-border button-circle button-small "><i class="fa fa-envelope "></i></button>
                     </div>
                 </div>
-
-                 <div class="recom">
-                    <div class="label"></div>
-                    <div class="ID"></div>
-                    <div class="message"></div>
-                    <div class="functions"></div>
-                </div>
-                <div class="recom">
-                    <div class="label"></div>
-                    <div class="ID"></div>
-                    <div class="message"></div>
-                    <div class="functions"></div>
-                </div>
+                {%endfor%}
             </div>
+
+            <div class="recommends" id = "ideaJS" style="display: none;">
+                {%for i in ideaList%}
+                <div class="recom">
+                    <div class="label"><span id = "idea{{i.ideaID}}">想法
+                     <script>
+                         var dic = {
+                    1:'人工智能',
+                    2:'移动开发',
+                    4:'物联网',
+                    8:'架构',
+                    16:'云计算/大数据',
+                    32:'互联网',
+                    64:'游戏开发',
+                    128:'运维',
+                    256:'数据库',
+                    512:'前端',
+                    1024:'后端',
+                    2048:'编程语言',
+                    4096:'研发管理',
+                    8192:'安全',
+                    16384:'程序人生',
+                    32768:'区块链',
+                    65536:'音视频开发',
+                    131072:'资讯',
+                    262144:'计算机理论与基础',
+                    };
+                       var str = '想法标签';
+                        for(var tmp = 1;tmp<=262144;tmp=tmp*2)
+                        {
+                         if(({{i.label}}&tmp) == tmp)
+                          str+= ", " +dic[tmp];
+                        }
+                    document.getElementById("idea{{i.ideaID}}").innerHTML = str;
+                        </script>
+                    </span>
+                    </div>
+                    <div class="ID">
+                        <div class="head">
+                            <img src="{%static i.sender.personImage%}" alt="">
+                        </div>
+                        <a href="/person/personTrends/{{i.sender.personID}}"><h2>{{i.sender.personName}}</h2></a>
+                    </div>
+                    <div class="message">{{i.content}}
+                    </div>
+                    <div class="message">{{i.createDate}}
+                    </div>
+                    <div class="functions">
+                         <button title="点赞 " onclick="ideaThumbUp({{i.ideaID}}) " class="button button-plain button-border button-circle button-primary button-small "><i class="fa fa-thumbs-up "></i></button>
+                        <button title="收藏 " onclick="ideaCollection({{i.ideaID}}) " class="button button-plain button-border button-circle button-small "><i class="fa fa-star "></i></button>   
+                       <a href="/discuss/{{i.ideaID}} "><button title="参与想法 " class="button button-plain button-border button-circle button-small "><i class="fa fa-plus "></i></button></a>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+
+            <div class="recommends" id = "articleJS" style="display: none;">
+                {%for i in articleList%}
+                <div class="recom">
+                    <div class="label"><span id = "article{{i.articleID}}">文章
+                     <script>
+                         var dic = {
+                    1:'人工智能',
+                    2:'移动开发',
+                    4:'物联网',
+                    8:'架构',
+                    16:'云计算/大数据',
+                    32:'互联网',
+                    64:'游戏开发',
+                    128:'运维',
+                    256:'数据库',
+                    512:'前端',
+                    1024:'后端',
+                    2048:'编程语言',
+                    4096:'研发管理',
+                    8192:'安全',
+                    16384:'程序人生',
+                    32768:'区块链',
+                    65536:'音视频开发',
+                    131072:'资讯',
+                    262144:'计算机理论与基础',
+                    };
+                       var str = '想法标签';
+                        for(var tmp = 1;tmp<=262144;tmp=tmp*2)
+                        {
+                         if(({{i.label}}&tmp) == tmp)
+                          str+= ", " +dic[tmp];
+                        }
+                    document.getElementById("article{{i.articleID}}").innerHTML = str;
+                        </script>
+                    </span>
+                    </div>
+                    <div class="ID">
+                        <div class="head">
+                            <img src="{%static i.sender.personImage%}" alt="">
+                        </div>
+                        <a href="person/personTrends/{{i.sender.personID}}"><h2>{{i.sender.personName}}</h2></a>
+                    </div>
+                    <div><h2><a href="/article/{{i.articleID}}">{{i.title}}</a></h2></div>
+                    <div class="message">{{i.description}}
+                    </div>
+                    <div class="message">{{i.createDate}}
+                    </div>
+                    <div class="functions">
+                        <button title="点赞 " onclick="articleThumbUp({{i.articleID}}) " class="button button-plain button-border button-circle button-primary button-small "><i class="fa fa-thumbs-up "></i></button>
+                        <button title="评论 " onclick="return articleCommentTanchu({{i.articleID}}) " class="button button-large button-plain button-border button-circle button-small "><i class="fa fa-envelope "></i></button>
+                        <button title="收藏 " onclick="articleCollection({{i.articleID}})" class="button button-plain button-border button-circle button-small "><i class="fa fa-star "></i></button>   
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+
         </div>
+
          <div class="rightContent">
             <div class="loginAndRegister" style="background-image: url({%static 'imgs/leftimg.jpg'%});background-size:100% 100%;" id="person">
                     <div class="head">
@@ -76,13 +305,13 @@
                         </section>
                     </div>
 
-                    <div class="leftFunctions">
-                        <div class="article"><a href=""><img src="{%static 'imgs/article.jpg'%}" alt="" height="40" width="40" ></a><span>写文章</span></div>
-                        <div class="thought"><a href="javascript:void(0)" onclick = "tanchu3()"><img src="{%static 'imgs/thought.jpg'%}" alt="" height="40" width="50" ></a><span>写想法</span></div>
-                        <div class="news"><a href = "javascript:void(0)" onclick = "tanchu()"><img src="{%static 'imgs/news.jpg'%}" alt="" height="40" width="40" ></a><span>写动态</span></div>
-                        <div class="collection"><a href="/person/personCollection/"><img src="{%static 'imgs/collection.jpg'%}" alt="" height="40" width="40" ></a><span>我的收藏</span></div>
-                        <div class="like"><a href="/person/personFollow/"><img src="{%static 'imgs/like2.jpg'%}" alt="" height="40" width="40" ></a><span>我的关注</span></div>
-                        <div class="logout"><a href="/logOut/" ><img src="{%static 'imgs/logout.jpg'%}" alt="" height="40" width="40" ></a><span>退出登录</span></div>
+                    <div class="leftFunctions ">
+                        <div class="article "><a href="/postnew/"><img src="{%static 'imgs/article.jpg'%} " alt=" " height="40 " width="40 " ></a><span>写文章</span></div>
+                        <div class="thought "><a href="javascript:void(0) " onclick = "tanchu3() "><img src="{%static 'imgs/thought.jpg'%} " alt=" " height="40 " width="50 " ></a><span>写想法</span></div>
+                        <div class="news "><a href = "javascript:void(0) " onclick = "tanchu() "><img src="{%static 'imgs/news.jpg'%} " alt=" " height="40 " width="40 " ></a><span>写动态</span></div>
+                        <div class="collection "><a href="/person/personCollectionIdea/ "><img src="{%static 'imgs/collection.jpg'%} " alt=" " height="40 " width="40 " ></a><span>我的收藏</span></div>
+                        <div class="like "><a href="/person/personFollow/ "><img src="{%static 'imgs/like2.jpg'%} " alt=" " height="40 " width="40 " ></a><span>我的关注</span></div>
+                        <div class="logout "><a href="/logOut/" ><img src="{%static 'imgs/logout.jpg'%} " alt=" " height="40 " width="40 " ></a><span>退出登录</span></div>
                     </div>
                         
 
@@ -100,16 +329,6 @@
             }
             </script>
             <div class="ads" style="background-image: url({%static 'imgs/ad.jpg'%});">
-            </div>
-            <div class="copyright">
-                <footer class="Footer">
-                <a class="Footer-item" target="_blank" rel="noopener noreferrer" href="//liukanshan.zhihu.com/">Git Me!</a>
-                <span class="Footer-dot"></span><a class="Footer-item" target="_blank" rel="noopener noreferrer" href="/question/19581624">GitSpace指南</a>
-                <span class="Footer-dot"></span><a class="Footer-item" target="_blank" rel="noopener noreferrer" href="/terms">GitSpace协议</a><span class="Footer-dot"></span>
-                <a class="Footer-item" target="_blank" rel="noopener noreferrer" href="/terms/privacy">隐私政策</a><br><a class="Footer-item" target="_blank" href="/app">应用</a><span class="Footer-dot"></span>
-                <a class="Footer-item" target="_blank" rel="noopener noreferrer" href="https://app.mokahr.com/apply/zhihu">工作</a><span class="Footer-dot"></span><button type="button" class="Button OrgCreateButton">申请开通GitSpace机构号</button><br><a class="Footer-item" target="_blank" rel="noopener noreferrer" href="https://zhuanlan.zhihu.com/p/28561671">侵权举报</a><span class="Footer-dot"></span><a class="Footer-item" target="_blank" rel="noopener noreferrer" href="http://www.12377.cn">网上有害信息举报专区</a>
-                <br><span class="Footer-item">违法和不良信息举报：010-82716601</span><br>
-                <a class="Footer-item" target="_blank" href="/contact">联系我们</a><span> © 2018 GitSpace</span></footer>
             </div>
 
         </div>

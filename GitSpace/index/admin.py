@@ -11,3 +11,7 @@ admin.site.register(DynamicComment)
 admin.site.register(ArticleComment)
 admin.site.register(IdeaCollection)
 admin.site.register(IdeaThumbUp)
+
+admin.site.register(ArticleThumbUp)
+admin.site.register(IdeaMember)
+admin.site.register(IdeaMessage)

@@ -75,6 +75,49 @@ function dynamicComment(dynamicID){
         }
     });
 }
+
+function articleComment(articleID){
+    var ucomment = document.getElementById('ucomment').value;
+    $.ajax({
+        type: 'POST',
+        url: '/indexComment/',
+        data: {'articleID':articleID,'switch':'articleComment','ucomment':ucomment},
+
+        success: function(data) {
+            data = JSON.parse(data);
+            if (data['result'] == 1) {
+                alert('评论成功');
+                
+                $('#commentTitle').html("");
+                $('#commentTitle').html(data['articleTitle']);
+
+                $('#CommentsContainer').html("");
+                $('#CommentsContainer').html(data['num']+'条评论');
+                $('#commentList').html("");
+
+                for(var i=0;i<data['num'];i++){
+
+                    var str='<div class="commentItem">' +
+                    '<div> ' +
+                    data['articleComment'][i]['commentUser'] +
+                    ':'+data['articleComment'][i]['commentContent'] +
+                    '<div style="float:right;">' +
+                    data['articleComment'][i]['commentTime'] +
+                    '</div>'+
+                    '</div>';
+
+                    $('#commentList').append(str);
+
+                }
+            }else{
+                alert('fuck')
+            }
+        },
+        error: function() {
+            alert('fuck，请过会儿再试试');
+        }
+    });
+}
 function dynamicCommentTanchu(dynamicID){
     // 动态评论弹出显示
     document.getElementById('light').style.display='block';
@@ -116,9 +159,37 @@ function dynamicCommentTanchu(dynamicID){
 
                     $('#commentList').append(str);
 
+
+                    // var str='<div class="commentItem">' +
+                    // '<div> '  + 
+                    // '<div id="CommentItemMeta" class="CommentItemMeta">'+
+                    // '<span id="UserLinkCommentItemAvatar" class="UserLinkCommentItemAvatar">'+
+                    // '</span>' + 
+                    // '<span id="UserLink" class="UserLink">' +
+                    // '<b>' +  
+                    // data['dynamicComment'][i]['commentUser'] + 
+                    // '</b>' + 
+                    // '</span>' + 
+                    // '<span id="CommentItemTime" class="CommentItemTime">' + 
+                    // data['dynamicComment'][i]['commentTime'] + 
+                    // '</span>' + 
+                    // '</div>' + 
+                    // '<div class="CommentItemContent">' + 
+                    // data['dynamicComment'][i]['commentContent'] + 
+                    // '</div>' + 
+                    // '</div>' + 
+                    // '</div>' ;
+
+                    // $('#commentList').append(str);
+
+
+
+
                 }
 
+
                 $('#commentsFooter').html("");
+
                 var str ='<input type="text" id="ucomment" name="ucomment" class="commentcontent">' + 
                 '<input type="submit" name="submit1" class="commentinput" value="评论" onclick="dynamicComment(' + 
                 dynamicID +
@@ -133,6 +204,70 @@ function dynamicCommentTanchu(dynamicID){
         },
         error: function() {
             alert('fuck，请过会儿再试试');
+        }
+    });
+
+    return false;
+}
+function articleCommentTanchu(articleID){
+    // 文章评论弹出显示
+    document.getElementById('light').style.display='block';
+    document.getElementById('fade').style.display='block';
+
+    $.ajax({
+        type: 'POST',
+        url: '/switch/',
+        data: {'articleID':articleID,'switch':'articleComment'},
+
+        success: function(data) {
+            data = JSON.parse(data);
+            if (data['num'] == 0) {
+                $('#commentTitle').html("");
+                $('#commentTitle').html(data['articleTitle']);
+
+                $('#CommentsContainer').html(data['num']+'条评论');
+                $('#commentList').html("");
+                alert('快抢沙发');
+
+                $('#commentsFooter').html("");
+                var str ='<input type="text" id="ucomment" name="ucomment" class="commentcontent">' + 
+                '<input type="submit" name="submit1" class="commentinput" value="评论" onclick="articleComment(' + 
+                articleID +
+                ')">' ; 
+                $('#commentsFooter').append(str);
+
+            }else{
+                $('#CommentsContainer').html(data['num']+'条评论');
+                $('#commentList').html("");
+
+                for(var i=0;i<data['num'];i++){
+
+                    var str='<div class="commentItem">' +
+                    '<div> ' +
+                    data['articleComment'][i]['commentUser'] +
+                    ':'+data['articleComment'][i]['commentContent'] +
+                    '<div style="float:right;">' +
+                    data['articleComment'][i]['commentTime'] +
+                    '</div>'+
+                    '</div>';
+
+                    $('#commentList').append(str);
+
+                }
+
+                $('#commentsFooter').html("");
+                var str ='<input type="text" id="ucomment" name="ucomment" class="commentcontent">' + 
+                '<input type="submit" name="submit1" class="commentinput" value="评论" onclick="articleComment(' + 
+                articleID +
+                ')">' ; 
+                $('#commentsFooter').append(str);
+
+
+            }
+            
+        },
+        error: function() {
+            alert('请过会儿再试试');
         }
     });
 
@@ -158,7 +293,7 @@ function dynamicThumup(dynamicID){
             }else if(data['result'] == 0){
                 alert('点赞成功')
             }else{
-                alert('fuck')
+                alert('点赞失败')
             }
         },
         error: function() {
@@ -183,7 +318,7 @@ function articleThumbUp(articleID){
             }else if(data['result'] == 0){
                 alert('点赞成功')
             }else{
-                alert('fuck')
+                alert('点赞失败')
             }
         },
         error: function() {
@@ -206,7 +341,7 @@ function ideaThumbUp(ideaID){
             }else if(data['result'] == 0){
                 alert('点赞成功')
             }else{
-                alert('fuck')
+                alert('点赞失败')
             }
         },
         error: function() {
@@ -230,7 +365,7 @@ function articleCollection(articleID){
             }else if(data['result'] == 0){
                 alert('收藏成功')
             }else{
-                alert('fuck')
+                alert('收藏失败')
             }
         },
         error: function() {
@@ -253,11 +388,80 @@ function ideaCollection(ideaID){
             }else if(data['result'] == 0){
                 alert('收藏成功')
             }else{
-                alert('fuck')
+                alert('收藏失败')
             }
         },
         error: function() {
             alert('保存失败，请过会儿再试试');
+        }
+    });
+}
+
+function dynamicDelete(dynamicID){
+    // 动态删除
+
+    $.ajax({
+        type: 'POST',
+        url:  '/switch/',
+        data: {'dynamicID':dynamicID,'switch':'dynamicDelete'},
+
+        success: function(data) {
+            data = JSON.parse(data);
+            if (data['result'] == 1) {
+                alert('动态已删除');
+                location.reload();
+            }else{
+                alert('删除失败')
+            }
+        },
+        error: function() {
+            alert('删除失败，请过会儿再试试');
+        }
+    });
+}
+
+function ideaDelete(ideaID){
+    // 想法删除
+
+    $.ajax({
+        type: 'POST',
+        url:  '/switch/',
+        data: {'ideaID':ideaID,'switch':'ideaDelete'},
+
+        success: function(data) {
+            data = JSON.parse(data);
+            if (data['result'] == 1) {
+                alert('想法已删除');
+                location.reload();
+            }else{
+                alert('删除失败')
+            }
+        },
+        error: function() {
+            alert('删除失败，请过会儿再试试');
+        }
+    });
+}
+
+function articleDelete(articleID){
+    // 文章删除
+
+    $.ajax({
+        type: 'POST',
+        url:  '/switch/',
+        data: {'articleID':articleID,'switch':'articleDelete'},
+
+        success: function(data) {
+            data = JSON.parse(data);
+            if (data['result'] == 1) {
+                alert('文章已删除');
+                location.reload();
+            }else{
+                alert('删除失败')
+            }
+        },
+        error: function() {
+            alert('删除失败，请过会儿再试试');
         }
     });
 }

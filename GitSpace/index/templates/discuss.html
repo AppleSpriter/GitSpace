@@ -3,14 +3,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>想法参与</title>
+    <title>我参与的想法　-　GitSpace</title>
     <link rel="stylesheet" href="{%static 'css/discuss.css'%}">
     <link rel="stylesheet" href="{%static 'css/button.css'%}">
     <link rel="stylesheet" href="{%static 'css/font-awesome.min.css'%}">
     <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{%static 'css/style.css'%}">
     <script src="{%static 'js/jquery-1.11.3.js'%}"></script>
-    <script src="{%static 'js/discuss.js'%}"></script>
+    <script type="text/javascript">
+    function tanchu(){
+    document.getElementById('deleteIdeaMember').style.display='block';
+    document.getElementById('fade').style.display='block';
+    }
+    function tanchu2(){
+    document.getElementById('deleteIdeaMember').style.display='none';
+    document.getElementById('fade').style.display='none';
+    }
+    </script>
 </head>
 
 <body>
@@ -22,7 +31,7 @@
                 <form method="post" action="/deleteIdeaMember/{{idea.ideaID}}/"　>
                 {% csrf_token %}
                 {%for p in ideaMemberList%}
-                <p><input type="checkbox" name="deleteIdeaMember" value="{{p.personID}}" />{{p.personName}}</p>
+                <p><input type="checkbox" name="deleteIdeaMember" value="{{p.member.personID}}" />{{p.member.personName}}</p>
                 {%endfor%}
                 <input type="submit" name=""  value="踢出参与成员" onclick="alert('踢出成功')" class="">
                 </form>
@@ -32,11 +41,10 @@
 
 <!-- 横幅 -->
     <div class="banner" style="background-image: url({%static 'imgs/banner2.jpg'%});">
-            <a href="/indexAfterLogin"><span>首页</span></a>
-
+        <a href="/indexAfterLogin"><span>首页</span></a>
         <div class="search bar">
-            <form>
-                <input placeholder="Git me！" name="cname" type="text">
+            <form id="form1" method="post" action="/search/">
+                <input placeholder="Git me！" name="searchContent" type="text">
                 <button type="submit"></button>
             </form>
         </div>
@@ -63,15 +71,13 @@
             {%endfor%}
 
 <!-- 富文本区域 -->
-            <div class="makeComment">
+            <div class="makeComment" style="margin-left: 0px;">
                 <form method="post" action="/discuss/{{idea.ideaID}}/">
                  {% csrf_token %}
-                    <textarea cols="30" rows="10" name="message">
-                    </textarea>
-                    <input type="submit" name="" value="发表">
+                    <textarea cols="80" rows="10" name="message"></textarea>
+                    <input type="submit" name="" value="发表"  style="background-color: #00CDCD;width: 76px;height: 36px;color: #FFFFFF">
                 </form>
             </div>
-
         </div>
 <!-- 右边部分 -->
     
@@ -81,10 +87,10 @@
 <!-- 一个想法参与者 -->
                 {%for m in ideaMemberList%}
                 <div class="oneMember">
-                    <div class="heads"><img src="{%static m.personImage%}"></div>
+                    <div class="heads"><img src="{% static m.member.personImage %}"></div>
                     <div class="profile">
-                        <div class="name"><span style="font-size: 20px;">{{m.personName}}</span></div>
-                        <div class="describe"><span>{{m.personInfo}}</span></div>
+                        <div class="name"><span style="font-size: 20px;">{{m.member.personName}}</span></div>
+                        <div class="describe"><span>{{m.member.personInfo}}</span></div>
                     </div>
                 </div>
                 {%endfor%}

@@ -4,8 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>test</title>
-    <title>个人主页</title>
+    <title>修改个人信息　-　GitSpace</title>
     <link rel="stylesheet" href="{%static 'css/index.css'%}">
     <link rel="stylesheet" href="{%static 'person/css/index.css'%}">
     <link rel="stylesheet" href="{%static 'person/css/button.css'%}">
@@ -17,6 +16,19 @@
     <script type="text/javascript" src="{%static 'person/js/index.js'%}"></script>
     <script src="{%static 'js/jquery-1.11.3.js'%}"></script>
     <script src="{%static 'js/comment.js'%}"></script>
+    <script type="text/javascript">
+    function searchType(str){
+    if(str == "editInfo"){
+      document.getElementById('editInfo').style.display='block';
+      document.getElementById('editPass').style.display='none';
+    }
+    else if(str == "editPass")
+    {
+      document.getElementById('editInfo').style.display='none';
+      document.getElementById('editPass').style.display='block';
+    }
+    };
+    </script>
 </head>
 
 <body>
@@ -31,16 +43,14 @@
     </div>
     <div class="wbanner" style="background-image: url({%static 'person/imgs/cha/banner_top.jpg'%});">
       　　<section class="wbox">
-        <div class="wavatar" style="background-image: url({%static person.personImage%});">
-          <a href="#">
-            <span>
-              {{person.personName}}
-            </span>
-          </a>
+        <div class="wavatar" style="background-image: url({%static person.personImage%}); background-size:contain;">
         </div>
         <ul class="wtexts">
-          <p>{{person.personInfo}}</p>
-        </ul>  
+                <p>{{person.personSex}}</p>
+                <p>{{person.personMobile}}</p>
+                <p>{{person.personEmail}}</p>
+                <p>{{person.personInfo}}</p>
+        </ul>
         <div class="wtexts">
                 <a href="/person/personTrends">返回个人主页>></a>
                 <div id="photo" style="left: -470px;">{{person.personName}}</div>    
@@ -48,7 +58,13 @@
       </section>
     </div>
 
-    <div class="background" style="background-image: url({%static 'person/imgs/cha/article.jpg'%});">
+    <div style="margin-left: 300px;">
+        <button class="button  button-small" onclick = "searchType('editInfo')"><h2>修改用户信息</h2></button>
+        <button class="button  button-small" onclick = "searchType('editPass')"><h2>修改密码</h2></button>
+    </div>
+
+    <div class="background" style="background-image: url({%static 'person/imgs/cha/article.jpg'%});" id="editInfo">
+      <div style="text-align: center;"><h2>{{mes}}</h2></div>
       <form enctype="multipart/form-data" method="post" action="/person/editPerson/">
       {% csrf_token %} 
         <table class="registerTop">
@@ -75,13 +91,9 @@
                  console.log("111")
             } else if('{{person.personSex}}'=='女') {
               document.getElementById('female').checked=true;
-            } else {
-
             }
             </script>
           </tr>
-          
-
           <tr><td><span>&nbsp;&nbsp;&nbsp;&nbsp;电话</span></td><td><input type="text" name="userMobile" value="{{person.personMobile}}" /></td></tr>
           <tr><td><span>&nbsp;&nbsp;&nbsp;&nbsp;邮箱</span></td><td><input type="text" name="userEmail" value="{{person.personEmail}}"/></td></tr>
 
@@ -101,6 +113,25 @@
       </form>
     </div>
 
+    <div class="background" style="background-image: url({%static 'person/imgs/cha/article.jpg'%});display:none;" id="editPass">
+      <form enctype="multipart/form-data" method="post" action="/changepassword/" >
+      {% csrf_token %} 
+        <table class="registerTop">
+          <tr>
+            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;原始密码:</span></td>
+            <td><span><input type="password" name="originpassword"  /></span></td>
+          </tr>
+          <tr>
+            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;新密码:</span></td>
+            <td><span><input type="password" name="newpassword"  /></span></td>
+          </tr>
+          <tr><td colspan="3"><input 
+            style=" width: 78px;   height: 32px;  background: rgba(47,166,183,1); color: white; text-align: center; line-height: 32px; cursor: pointer; margin: auto; position: relative;left: 180px;" 
+            type="submit" name="submit" value="修改密码" /></td>
+          </tr>
+        </table>
+      </form>
+    </div>
 
     <footer>
     </footer>

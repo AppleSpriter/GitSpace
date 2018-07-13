@@ -4,8 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>test</title>
-    <title>个人主页</title>
+    <title>查看关注　-　GitSpace</title>
     <link rel="stylesheet" href="{%static 'person/css/index.css'%}">
     <link rel="stylesheet" href="{%static 'person/css/button.css'%}">
     <link rel="stylesheet" href="{%static 'person/css/font-awesome.min.css'%}">
@@ -46,8 +45,8 @@
     <div class="banner" style="background-image: url({%static 'imgs/banner2.jpg'%});">
         <a href="/indexAfterLogin"><span>首页</span></a>
         <div class="search bar">
-            <form>
-                <input  placeholder="Git me！" name="cname" type="text">
+            <form method="post" action="/search/">
+                <input  placeholder="Git me！" name="searchContent" type="text">
                 <button type="submit"></button>
             </form>
         </div>    
@@ -56,11 +55,6 @@
     <div class="wbanner" style="background-image: url({%static 'person/imgs/cha/banner_top.jpg'%});">
       　　<section class="wbox">
         <div class="wavatar" style="background-image: url({%static person.personImage%});background-size:contain;">
-          <a href="#">
-            <span>
-              {{person.personName}}
-            </span>
-          </a>
         </div>
         <ul class="wtexts">
           <p>{{person.personSex}}</p>
@@ -68,40 +62,36 @@
           <p>{{person.personEmail}}</p>
           <p>{{person.personInfo}}</p>
         </ul>
-        <!-- －－－－－－－－－－－－－－－判断关注模块－－－－－－－－－－－－－－－ -->
-        <form action="{%url 'cancelFollowPerson' person.personID%}" method="post" id="form1" style="display: none;">
-                    {% csrf_token %}
-                    <input type="submit" id="{{person.personID}}" value="已关注" onmouseover="Overchange(this)" onmouseout="Outchange(this)"   onclick="Clikchange(this)" style="width: 78px; height: 32px; float: left; background: rgba(7,166,83,1); color: white; text-align: center; line-height: 32px; cursor: pointer; position:relative;left: -100px;top: 100px;"> 
-        </form> 
-
-        <form action="{%url 'addFollowPerson' person.personID%}" method="post" id="form2" >
-                    {% csrf_token %}
-                    <input type="submit" id="{{person.personID}}" value="关注" onmouseover="Overchange(this)" onmouseout="Outchange(this)"   onclick="Clikchange(this)" style="width: 78px; height: 32px; float: left; background: rgba(7,166,83,1); color: white; text-align: center; line-height: 32px; cursor: pointer; position:relative;left: -100px;top: 100px;"> 
-        </form> 
-        <script type="text/javascript">
-          var followCheck = {{ followMes|safe }}
-          if(followCheck == 0){
-              document.getElementById('form1').style.display='none';
-              document.getElementById('form2').style.display='';
-              }
-              else{
-              document.getElementById('form1').style.display='';
-              document.getElementById('form2').style.display='none';
-              }
-        </script>
-        <!-- －－－－－－－－－－－－－－－/判断关注模块－－－－－－－－－－－－－－－ -->
+         <!-- －－－－－－－－－－－－－－－判断关注模块－－－－－－－－－－－－－－－ -->
+            <form action="{%url 'cancelFollowPerson' person.personID%}" method="post" id="form1" style="display: none;">
+                {% csrf_token %}
+                <input type="submit" id="{{person.personID}}" value="已关注" onmouseover="Overchange(this)" onmouseout="Outchange(this)" onclick="Clikchange(this)" style="width: 78px; height: 32px; float: left; background: rgba(7,166,83,1); color: white; text-align: center; line-height: 32px; cursor: pointer; position:relative;left: -100px;top: 100px;">
+            </form>
+            <form action="{%url 'addFollowPerson' person.personID%}" method="post" id="form2">
+                {% csrf_token %}
+                <input type="submit" id="{{person.personID}}" value="关注" onmouseover="Overchange(this)" onmouseout="Outchange(this)" onclick="Clikchange(this)" style="width: 78px; height: 32px; float: left; background: rgba(7,166,83,1); color: white; text-align: center; line-height: 32px; cursor: pointer; position:relative;left: -100px;top: 100px;">
+            </form>
+            <script type="text/javascript">
+            var followCheck = {{followMes | safe}}
+            if (followCheck == 0) {
+                document.getElementById('form1').style.display = 'none';
+                document.getElementById('form2').style.display = '';
+            } else {
+                document.getElementById('form1').style.display = '';
+                document.getElementById('form2').style.display = 'none';
+            }
+            </script>
+            <!-- －－－－－－－－－－－－－－－/判断关注模块－－－－－－－－－－－－－－－ -->
         <div class="wtexts">
                 <a href="/person/personTrends" style="margin-left: 420px;">返回个人主页>></a>
-                <div id="photo">{{person.personName}}</div> 
-         <!--测试昵称-->           
-<!--         </div>
-    
-                <div class="wtexts">
-                <a href="/person/edit_Person" style="margin-left: 420px;>编辑个人主页>></a>
-                <div id="photo">乌蝇哥</div>    
-        </div> -->
-        <!--测试昵称--> 
-
+        </div>
+            <div id="photo">
+                <div style="position: relative;width: 200px;text-align: center;bottom: 15px;"> 
+                <div style="position: relative;bottom: 20px;">
+                    <h1>{{person.personName}}</h1>
+                </div>
+                </div> 
+            </div>          
       </section>
     </div>
     <div class="wtemplate">
@@ -118,28 +108,6 @@
 <!--头部-->
 
 
-<!-- 评论区域 -->
-<div id="light" class="commentArea">
-    <a href = "javascript:void(0)" onclick = "commentTanchu2()"><button title="关闭" class="button  button-border button-circle button-small closeButton">X</button></a>
-
-    <div id="CommentsContainer" class="CommentsContainer">
-          条评论
-    </div>
-    <div >
-        <div class="TopbarCommentTopbar"></div>
-          <!-- 评论列表commentList　包含头像,评论者,评论内容 -->
-        <div id="commentList" class="commentList"><!--  循环创建每个评论 -->
-         
-        </div>
-
-        <div id="commentsFooter" class="commentsFooter">
-
-            <input type="text" id="ucomment" name="ucomment" class="commentcontent">
-              
-        </div>
-
-    </div>
-</div>
 
 <div id="fade" class="blackoverlay"></div>
 <!--  -->
@@ -148,136 +116,17 @@
     <article>
 
         <div class="bloglist left">
-            {%for s in dynamicList%}
-
-            <!--横条开始位置-->
-                 <div class="recom">
-                    <div class="ID">
-                        <div class="head">
-                            <img src="{%static person.personImage%}" alt="">
-                        </div>
-                    <h2>{{s.sender.personName}}</h2>
-                    </div>
-                    <div class="message">{{s.content}}
-                    </div>
-                    <div class="message">{{s.createDate}}
-                    </div>
-                    <div class="functions">
-                        <button title="点赞" onclick="dynamicThumup({{s.dynamicID}})" class="button button-plain button-border button-circle  button-primary button-small"><i class="fa fa-thumbs-up"></i></button>
-                         <a href=""><button title="评论" onclick="return dynamicCommentTanchu({{s.dynamicID}})" class="button button-large  button-plain button-border button-circle button-small" onmousedown = 'makeComments()'><i class="fa fa-envelope"></i>
-                        </button></a>                
-                        <button title="转发" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-reply"></i></button>
-                        <button title="收藏" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-star"></i></button> 
-                        <button title="参与想法" class="button button-large button-plain button-border button-circle button-small"><i class="fa fa-plus"></i></button>
-                    </div>
-                </div>
-            <!--这是横条结束位置-->
-            {%endfor%}
-
-        </div>
-        <!--右边条幅栏目结束位置-->
-            
-
-
-      <aside class="right">
-      
-        <div class="weather" style="background-image: url({%static 'person/imgs/cha/weather_bg.jpg'%}); background-repeat: no-repeat;">
-          <iframe width="250" scrolling="no" height="60" frameborder="0" 
-          allowtransparency="true" >
-          </iframe>
-        </div>
-          <div class="news">
-            <h3>
-              <p>最新<span>文章</span></p>
-            </h3>
-            <ul class="rank">
-            <li><a href="/" title="Column 三栏布局 个人网站模板" target="_blank">Column 三栏布局 个人网站模板</a></li>
-            <li><a href="/" title="with love for you 个人网站模板" target="_blank">with love for you 个人网站模板</a></li>
-            <li><a href="/" title="免费收录网站搜索引擎登录口大全" target="_blank">免费收录网站搜索引擎登录口大全</a></li>
-            <li><a href="/" title="做网站到底需要什么?" target="_blank">做网站到底需要什么?</a></li>
-            <li><a href="/" title="企业做网站具体流程步骤" target="_blank">企业做网站具体流程步骤</a></li>
-            <li><a href="/" title="建站流程篇――教你如何快速学会做网站" target="_blank">建站流程篇――教你如何快速学会做网站</a></li>
-            <li><a href="/" title="box-shadow 阴影右下脚折边效果" target="_blank">box-shadow 阴影右下脚折边效果</a></li>
-            <li><a href="/" title="打雷时室内、户外应该需要注意什么" target="_blank">打雷时室内、户外应该需要注意什么</a></li>
-            </ul>
-            <h3 class="ph">
-            <p>点击<span>排行</span></p>
-            </h3>
-            <ul class="paih">
-            <li><a href="/" title="Column 三栏布局 个人网站模板" target="_blank">Column 三栏布局 个人网站模板</a></li>
-            <li><a href="/" title="withlove for you 个人网站模板" target="_blank">with love for you 个人网站模板</a></li>
-            <li><a href="/" title="免费收录网站搜索引擎登录口大全" target="_blank">免费收录网站搜索引擎登录口大全</a></li>
-            <li><a href="/" title="做网站到底需要什么?" target="_blank">做网站到底需要什么?</a></li>
-            <li><a href="/" title="企业做网站具体流程步骤" target="_blank">企业做网站具体流程步骤</a></li>
-            </ul>
-            <h3 class="links">
-            <p>友情<span>链接</span></p>
-            </h3>
-            <ul class="website">
-            <li><a href="/">个人博客</a></li>
-            <li><a href="/">谢泽文个人博客</a></li>
-            <li><a href="/">3DST技术网</a></li>
-            <li><a href="/">思衡网络</a></li>
-            </ul> 
-          </div>  
-          <!-- Baidu Button BEGIN -->
-
-<!--           <div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
-          <a class="bds_tsina"></a>
-          <a class="bds_qzone"></a>
-          <a class="bds_tqq"></a>
-          <a class="bds_renren"></a>
-          <span class="bds_more"></span>
-          <a class="shareCount"></a>
-          </div> -->
-
-<!--           <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6574585" ></script> 
-          <script type="text/javascript" id="bdshell_js"></script> 
-          <script type="text/javascript">
-      document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
-           </script> -->
-
-          <!-- Baidu Button END -->   
-<!--           <a href="/" class="weixin"> </a> -->
-    </aside>
-    </article>
-    <footer>
-      
-    </footer>
-
-    </article>
-
-</body>
-
-</html 
-
-    <article>
-        <div class="bloglist left">
             {%for p in presonFollowList%}
             <!--横条开始位置-->
             <div class="recom">
                 <div class="ID">
-                    <div class="head" id="div1">
-                        <img src="{%static 'person/imgs/head.png'%}" alt="">
-                        <div id="div2" class="box">
-                            <div class="con-ret"></div>
-                            <div class="con">
-                                <br>我是来充数的！
-                                <h3>没有签名</h3></div>
-                        </div>
+                    <div class="head" id="div1" onmouseover="OverT(this)" onmouseout="OutT(this)">
+                        <img src="{%static p.followee.personImage%}" alt="">
                     </div>
-                    <h2>{{p.followee.personName}}</h2>
+                    <a href="/person/personTrends/{{p.followee.personID}}"><h2>{{p.followee.personName}}</h2></a>
                 </div>
                 <!--此处是ＩＤ结束位置-->
-                <div class="message">传奇游戏大家都喜欢特戒。前3个特戒，很轻松到手了，最难也就是充个VIP2，50块钱吧，也给的起。好了，到了第四个麻痹戒指
-                </div>
-                <!--此处message结束-->
-                <div style="position: relative;float:right; bottom: 50px;left: 250px;">
-                    <!-- id该采取那个东西需要商讨 -->
-                    <form action="/cancelFollow/{{p.followee.personID}}/" method="post">
-                        {% csrf_token %}
-                        <input type="submit" id="{{p.followee.personID}}" value="已关注" onmouseover="Overchange(this)" onmouseout="Outchange(this)" onclick="Clikchange(this)" style="width: 78px; height: 32px; float: left; background: rgba(7,166,83,1); color: white; text-align: center; line-height: 32px; cursor: pointer; ">
-                    </form>
+                <div class="message">{{p.followee.personInfo}}
                 </div>
                 <!--这是关注结束位置-->
             </div>
@@ -285,7 +134,7 @@
             {%endfor%}
         </div>
         <!--右边条幅栏目结束位置-->
-        <aside class="right">
+      <aside class="right">
             <div class="weather" style="background-image: url({%static 'person/imgs/cha/weather_bg.jpg'%}); background-repeat: no-repeat;">
                 <iframe width="250" scrolling="no" height="60" frameborder="0" allowtransparency="true">
                 </iframe>
@@ -295,39 +144,38 @@
               <p>最新<span>文章</span></p>
             </h3>
                 <ul class="rank">
-                    <li><a href="/" title="Column 三栏布局 个人网站模板" target="_blank">Column 三栏布局 个人网站模板</a></li>
-                    <li><a href="/" title="with love for you 个人网站模板" target="_blank">with love for you 个人网站模板</a></li>
-                    <li><a href="/" title="免费收录网站搜索引擎登录口大全" target="_blank">免费收录网站搜索引擎登录口大全</a></li>
-                    <li><a href="/" title="做网站到底需要什么?" target="_blank">做网站到底需要什么?</a></li>
-                    <li><a href="/" title="企业做网站具体流程步骤" target="_blank">企业做网站具体流程步骤</a></li>
-                    <li><a href="/" title="建站流程篇――教你如何快速学会做网站" target="_blank">建站流程篇――教你如何快速学会做网站</a></li>
-                    <li><a href="/" title="box-shadow 阴影右下脚折边效果" target="_blank">box-shadow 阴影右下脚折边效果</a></li>
-                    <li><a href="/" title="打雷时室内、户外应该需要注意什么" target="_blank">打雷时室内、户外应该需要注意什么</a></li>
+                    {%for i in articlenew%}                 
+                    <li><a href="/article/{{i.articleID}}" title="{{i.title}}" target="_blank">{{i.title}}</a></li>
+                    {%endfor%}
                 </ul>
                 <h3 class="ph">
             <p>点击<span>排行</span></p>
             </h3>
                 <ul class="paih">
-                    <li><a href="/" title="Column 三栏布局 个人网站模板" target="_blank">Column 三栏布局 个人网站模板</a></li>
-                    <li><a href="/" title="withlove for you 个人网站模板" target="_blank">with love for you 个人网站模板</a></li>
-                    <li><a href="/" title="免费收录网站搜索引擎登录口大全" target="_blank">免费收录网站搜索引擎登录口大全</a></li>
-                    <li><a href="/" title="做网站到底需要什么?" target="_blank">做网站到底需要什么?</a></li>
-                    <li><a href="/" title="企业做网站具体流程步骤" target="_blank">企业做网站具体流程步骤</a></li>
+                     {%for i in hotarticle%}                 
+                    <li><a href="/article/{{i.articleID}}" title="{{i.title}}" target="_blank">{{i.title}}</a></li>
+                    {%endfor%}
+                     {%for i in hotidea%}                 
+                    <li><a href="/discuss/{{i.ideaID}}" title="" target="_blank">{{i.content}}</a></li>
+                    {%endfor%}
                 </ul>
                 <h3 class="links">
             <p>友情<span>链接</span></p>
             </h3>
                 <ul class="website">
-                    <li><a href="/">个人博客</a></li>
-                    <li><a href="/">谢泽文个人博客</a></li>
-                    <li><a href="/">3DST技术网</a></li>
-                    <li><a href="/">思衡网络</a></li>
+                    <li><a href="http://www.nwsuaf.edu.cn">西北农林科技大学</a></li>
+                    <li><a href="https://pt.nwsuaf6.edu.cn">麦田pt</a></li>
+                    <li><a href="https://www.csdn.net/">csdn</a></li>
                 </ul>
             </div>
         </aside>
     </article>
     <footer>
+      
     </footer>
+
     </article>
+
 </body>
-</html
+
+</html>

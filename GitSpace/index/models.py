@@ -42,7 +42,7 @@ class Dynamic(models.Model):
 
 class Article(models.Model):
     articleID = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=100)
     content = models.TextField(null=True)
     description = models.TextField(null=True)
     label = models.BigIntegerField()
@@ -51,7 +51,7 @@ class Article(models.Model):
     isPub = models.BooleanField(1)
     
     def __str__(self):
-        return str(self.articleID)
+        return str(self.title)
 
     # @property
     # def get_comments(self):
